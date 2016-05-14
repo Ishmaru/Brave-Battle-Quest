@@ -1,0 +1,133 @@
+body {
+  background-color: #333333;
+  font-family: fantasy;
+  color: white;
+  text-align: center;
+}
+
+.background {
+  /*display: inline-block;*/
+  background: url("../art/area2.jpg");
+  width: 1050px;
+  height: 650px;
+  padding-top: 20px;
+  margin-right: auto;
+  margin-left: auto;
+  margin-top: 50px;
+  border-style: solid;
+  border-radius: 25px;
+  border-color: #0066cc;
+  border-width: 5px;
+  box-shadow: 5px 3px black;
+}
+
+#player {
+  position: absolute;
+  left: 350px;
+  top: 57px;
+  background: url("../art/hero.png");
+  background-size: 500px;
+  background-color: #002255;
+  background-repeat: no-repeat;
+  background-position: -130px;
+  width: 700px;
+  height: 650px;
+  border-style: solid;
+  border-radius: 25px;
+  border-color: #0066cc;
+  border-width: 5px;
+  box-shadow: 8px 6px black;
+  text-align: right;
+}
+
+ul{
+  margin-left: 300px;
+  margin-right: 20px;
+  list-style-type: none;
+}
+
+.view {
+  background: url("../art/whyvern1.png");
+  background-size: 500px;
+  width:500px;
+  height:600px;
+  margin-left: 30px;
+  display: inline-block;
+  float: left;
+  border-style: solid;
+  border-radius: 25px;
+  border-color: #0066cc;
+  border-width: 5px;
+  box-shadow: 5px 3px black;
+}
+
+.button{
+  display: inline-block;
+  float: right;
+  background-color: #113377;
+  width: 200px;
+  height: 38px;
+  border-style: solid;
+  border-radius: 5px;
+  border-color: #0066cc;
+  border-width: 2px;
+  box-shadow: 3px 2px black;
+  margin:20px 10px;
+  font-size: 20px;
+  padding-top: 12px;
+}
+
+.button:hover {
+  background-color: #224499;
+  cursor: pointer;
+}
+
+.status {
+  margin:2px 30px 15px 15px;
+  display: inline-block;
+  float: right;
+  width: 450px;
+  height: 150px;
+  border-style: solid;
+  border-radius: 25px;
+  border-color: #0066cc;
+  border-width: 5px;
+  box-shadow: 5px 3px black;
+  background: url("../art/playerstatus.png");
+
+}
+
+.status:hover {
+  background-color: #224499;
+  cursor: pointer;
+  background-position: 500px;
+  background-repeat: no-repeat;
+}
+
+.menubox {
+  display: inline-block;
+  padding-top: 15px;
+  float: right;
+  width: 450px;
+  height: 390px;
+  border-style: solid;
+  border-radius: 25px;
+  border-color: #0066cc;
+  border-width: 5px;
+  box-shadow: 5px 3px black;
+  margin:15px 30px 15px 15px;
+}
+
+#dammage, #health, #stamina, #player{
+  font-size: 45px;
+  padding-top: 5px;
+}
+
+.indicator {
+  margin-top: 5px;
+  float: left;
+  width: 250px;
+  height: 200px;
+  cursor: pointer;
+}
+
