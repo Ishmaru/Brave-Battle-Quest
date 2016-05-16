@@ -22,7 +22,7 @@ var hero = {
   // Attack deals random dammage based on strength + strengthMod * a random number, subtracts stamina, Calls enemy attack after.
   attack: function attack(){
     if (hero.health >= 1 && hero.stamina >= 1) {
-      area[0].health -=(parseInt(Math.random() * (hero.strength + hero.strengthMod)));
+      area[0].health -= getStrength();
       hero.stamina -= 1;
       console.log("ATTACK!");
       console.log(area[0].name + " HP: " + area[0].health);
@@ -32,7 +32,7 @@ var hero = {
   },
   // Defend increases armor by armorMod, Increases stamina by 1, Calls enemy attack, then returns armor to its state before function.
   defend: function defend(){
-    if (hero.health >= 1 && hero.stamina >= 0) {;
+    if (hero.health >= 1) {;
       hero.stamina += 1;
       hero.armor += hero.armorMod;
       if (hero.stamina >= hero.staminaMax) {
@@ -48,10 +48,10 @@ var hero = {
   //fire deals random dammage based on strength + strengthMod  * a random number, subtracts lots of stamina, Calls enemy attack after.
   fire: function fire(){
     if (hero.health >= 1 && hero.stamina >= 5) {
-      area[0].health -=(parseInt(Math.random() * (hero.strength + hero.strengthMod)));
-      // area[0].health -=(parseInt(Math.random() * ((hero.strength + hero.strengthMod) *= 2)));
+      // area[0].health -=(parseInt(Math.random() * (hero.strength + hero.strengthMod)));
+      area[0].health -= getStrength() * 2;
       hero.stamina -= 5;
-      console.log("ULTIMATE SECRET TECHNIQUE!!!!");
+      console.log("SECRET TECHNIQUE!!!!");
       console.log(area[0].name + " HP: " + area[0].health);
       console.log("Your Stamina: " + hero.stamina);
       hero.strength /= 3;
@@ -101,9 +101,8 @@ var hero = {
   //lightning deals random dammage based on strength + strengthMod  * a random number, subtracts lots of stamina, Calls enemy attack after.
   lightning: function lightning(){
     if (hero.health >= 1 && hero.stamina >= 5) {
-      area[0].health -=(parseInt(Math.random() * (hero.strength + hero.strengthMod)));
-      // area[0].health -= (parseInt(Math.random() * ((hero.strength + hero.strengthMod) *= 6)));
-      hero.stamina -= 5;
+      area[0].health -= getStrength() * 5
+      hero.stamina -= 15;
       console.log("ULTIMATE SECRET TECHNIQUE!!!!");
       console.log(area[0].name + " HP: " + area[0].health);
       console.log("Your Stamina: " + hero.stamina);
@@ -123,6 +122,11 @@ var hero = {
     hero.armorMod = armortemp;
     }
   },
+}
+
+function getStrength() {
+var dammage = (math.floor(Math.random() * (hero.strength + hero.strengthMod)));
+return dammage;
 }
 
 //Items
@@ -256,8 +260,6 @@ function levelUp() {
 
 // random generates a new Item
 function getItem() {
-  var r = Math.random();
-  if (r >= 8) {
-
-  }
+  var r = Math.floor(Math.random() * 10);
+  item[Object.keys(item)[r]]();
 };

@@ -21,7 +21,16 @@ body {
   box-shadow: 5px 3px black;
 }
 
-#player {
+#dammageTaken {
+  position: absolute;
+  background: url("../art/enemyattack.png");
+  width: 1050px;
+  height: 650px;
+  background-repeat: no-repeat;
+  background-size: 1050px;
+}
+
+#player, #playerLvUp, #event, #enemyStat {
   position: absolute;
   left: 350px;
   top: 57px;
@@ -32,33 +41,53 @@ body {
   background-position: -130px;
   width: 700px;
   height: 650px;
-  border-style: solid;
-  border-radius: 25px;
-  border-color: #0066cc;
-  border-width: 5px;
-  box-shadow: 8px 6px black;
   text-align: right;
 }
 
-ul{
-  margin-left: 300px;
-  margin-right: 20px;
+#enemyStat {
+  background: url("../art/whyvern1.png");
+  background-size: 500px;
+  background-color: #002255;
+  background-repeat: no-repeat;
+  background-position: -70px;
+}
+
+#event{
+  background-position: -600px;
+  text-align: center;
+}
+
+ul {
   list-style-type: none;
 }
 
-.view {
+#player > ul, #playerLvUp > ul, #enemyStat > ul {
+  margin-left: 300px;
+  margin-right: 20px;
+}
+
+#event > ul {
+float: center;
+text-align: center;
+}
+
+
+#enemy {
   background: url("../art/whyvern1.png");
   background-size: 500px;
   width:500px;
   height:600px;
   margin-left: 30px;
-  display: inline-block;
   float: left;
-  border-style: solid;
-  border-radius: 25px;
-  border-color: #0066cc;
-  border-width: 5px;
-  box-shadow: 5px 3px black;
+}
+
+#dammage {
+  background: url("../art/attack.png");
+  background-size: 600px;
+  width:500px;
+  height:600px;
+  background-repeat: no-repeat;
+  background-position: -50px;
 }
 
 .button{
@@ -77,48 +106,41 @@ ul{
   padding-top: 12px;
 }
 
-.button:hover {
+.button:hover, #event:hover, #player:hover, #playerLvUp:hover, #enemyStat:hover, #enemy:hover, .status:hover {
   background-color: #224499;
   cursor: pointer;
 }
 
 .status {
   margin:2px 30px 15px 15px;
-  display: inline-block;
   float: right;
   width: 450px;
   height: 150px;
-  border-style: solid;
-  border-radius: 25px;
-  border-color: #0066cc;
-  border-width: 5px;
-  box-shadow: 5px 3px black;
   background: url("../art/playerstatus.png");
 
 }
 
-.status:hover {
-  background-color: #224499;
-  cursor: pointer;
-  background-position: 500px;
-  background-repeat: no-repeat;
-}
-
-.menubox {
-  display: inline-block;
-  padding-top: 15px;
-  float: right;
-  width: 450px;
-  height: 390px;
+.menubox, .status, #enemy, #player, #playerLvUp, #event, #enemyStat  {
   border-style: solid;
   border-radius: 25px;
   border-color: #0066cc;
   border-width: 5px;
   box-shadow: 5px 3px black;
+}
+
+.menubox, .status, #enemy, {
+  display: inline-block;
+}
+
+.menubox {
+  padding-top: 15px;
+  float: right;
+  width: 450px;
+  height: 390px;
   margin:15px 30px 15px 15px;
 }
 
-#dammage, #health, #stamina, #player{
+#dammage, #health, #stamina, #player, #playerLvUp, #event, #enemyStat {
   font-size: 45px;
   padding-top: 5px;
 }
