@@ -13,7 +13,7 @@ var hero = {
   armor: 0,
   armorMod: 5,
   strength: 15,
-  strengthMod: 0,
+  strengthMod: 1,
   stamina: 25,
   staminaMax: 25,
   exp: 0,
@@ -28,6 +28,7 @@ var hero = {
       console.log(area[0].name + " HP: " + area[0].health);
       console.log("Your Stamina: " + hero.stamina);
       area[0].attack(hero);
+      renderSkill(hero.attack.name);
     }
   },
   // Defend increases armor by armorMod, Increases stamina by 1, Calls enemy attack, then returns armor to its state before function.
@@ -43,6 +44,7 @@ var hero = {
       console.log("Your Stamina: " + hero.stamina);
       area[0].attack(hero);
       hero.armor -= hero.armorMod;
+      renderSkill(hero.defend.name);
     }
   },
   //fire deals random dammage based on strength + strengthMod  * a random number, subtracts lots of stamina, Calls enemy attack after.
@@ -56,6 +58,7 @@ var hero = {
       console.log("Your Stamina: " + hero.stamina);
       hero.strength /= 3;
       area[0].attack(hero);
+      renderSkill(hero.fire.name);
     }
   },
   //heal increases health by 50 but not past value of healthMax. If health is greater, health sets to healthMax. Then calls enemy attack after.
@@ -70,6 +73,7 @@ var hero = {
       console.log("Your Health: " + hero.health);
       console.log("Your Stamina: " + hero.stamina);
       area[0].attack(hero);
+      renderSkill(hero.heal.name);
     }
   },
   //wait restores stamina, and calls enemy attack.
@@ -82,6 +86,7 @@ var hero = {
     console.log("Waiting...");
     console.log("Your Stamina: " + hero.stamina);
     area[0].attack(hero);
+    renderSkill(hero.wait.name);
     }
   },
   //restore sets health to healthMax. and reduced staming significantly. Then calls enemy attack after.
@@ -96,6 +101,7 @@ var hero = {
       console.log("Your Health: " + hero.health);
       console.log("Your Stamina: " + hero.stamina);
       area[0].attack(hero);
+      renderSkill(hero.restore.name);
     }
   },
   //lightning deals random dammage based on strength + strengthMod  * a random number, subtracts lots of stamina, Calls enemy attack after.
@@ -108,6 +114,7 @@ var hero = {
       console.log("Your Stamina: " + hero.stamina);
       hero.strength /= 3;
       area[0].attack(hero);
+      renderSkill(hero.lightning.name);
     }
   },
   //Charge reduces armor by armorMod * -1.5, sets stamina to the max value, then calls enemy attack.
@@ -120,12 +127,13 @@ var hero = {
     console.log("Your Stamina: " + hero.stamina);
     area[0].attack(hero);
     hero.armorMod = armortemp;
+    renderSkill(hero.charge.name);
     }
   },
 }
 
 function getStrength() {
-var dammage = (Math.floor(Math.random() * (hero.strength + hero.strengthMod)));
+var dammage = (Math.floor(Math.random() * hero.strength) + hero.strengthMod);
 return dammage;
 }
 
@@ -255,6 +263,7 @@ function levelUp() {
     console.log("Stamina + 2");
   };
   nextEnemy();
+  renderEnemy();
 };
 
 
@@ -319,29 +328,38 @@ var enemyAvatar = document.getElementById('enemy');
 var enemydammage = document.getElementById('dammage');
 var enemyAttack = document.getElementById('dammageTaken');
 
+// Renders enemy avatar
 function renderEnemy() {
   if (area[0].name === "stalion"){
-    enemy.style.backgroundImage="url('art/stalion1.png')";
+    enemyAvatar.style.backgroundImage="url('art/stalion1.png')";
   } else if (area[0].name === "goul"){
-    enemy.style.backgroundImage="url('art/soul1.png')";
+    enemyAvatar.style.backgroundImage="url('art/soul1.png')";
   } else if (area[0].name === "skywhale"){
-    enemy.style.backgroundImage="url('art/skywhale1.png')";
+    enemyAvatar.style.backgroundImage="url('art/skywhale1.png')";
   } else if (area[0].name === "darkness"){
-    enemy.style.backgroundImage="url('art/darkness1.png')";
+    enemyAvatar.style.backgroundImage="url('art/darkness1.png')";
   } else if (area[0].name === "wasp"){
-    enemy.style.backgroundImage="url('art/wasp1.png')";
+    enemyAvatar.style.backgroundImage="url('art/wasp1.png')";
   } else if (area[0].name === "whyvern"){
-    enemy.style.backgroundImage="url('art/whyvern1.png')";
+    enemyAvatar.style.backgroundImage="url('art/whyvern1.png')";
   } else {
-    enemy.style.backgroundImage="url('art/chest.png')";
+    enemyAvatar.style.backgroundImage="url('art/chest.png')";
   }
+};
+
+function renderSkill(skill) {
+  if (skill == undefined) {
+    enemydammage.style.backgroundImage="url('art/none.png')";
+  }
+    var src = 'url("art/' + skill + '.png")';
+    enemydammage.style.backgroundImage=src;
+    renderStats();
 };
 
 
 
-
-
-
+renderSkill();
+renderEnemy();
 
 
 
