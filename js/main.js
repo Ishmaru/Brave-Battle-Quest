@@ -4,6 +4,7 @@ var enemyLV = 0;
 //Actual play space, holds enemies, and other events. Actions only effect the 0 index and shifts when done
 var area = [];
 
+
 //the Hero object
 var hero = {
   name: "Akari",
@@ -36,9 +37,7 @@ var hero = {
     if (hero.health >= 1) {;
       hero.stamina += 1;
       hero.armor += hero.armorMod;
-      if (hero.stamina >= hero.staminaMax) {
-        hero.stamina = hero.staminaMax;
-      }
+      if (hero.stamina >= hero.staminaMax) hero.stamina = hero.staminaMax;
       console.log("Defending...");
       console.log("Your Armor: " + hero.armor);
       console.log("Your Stamina: " + hero.stamina);
@@ -65,9 +64,7 @@ var hero = {
     if (hero.health >= 1 && (hero.health < hero.healthMax) && hero.stamina >= 10) {
       hero.health += 50;
       hero.stamina -= 10;
-      if (hero.health >= hero.healthMax) {
-        hero.health = hero.healthMax;
-      }
+      if (hero.health >= hero.healthMax) hero.health = hero.healthMax;
       console.log("Fisrt Aid.");
       console.log("Your Health: " + hero.health);
       console.log("Your Stamina: " + hero.stamina);
@@ -79,13 +76,11 @@ var hero = {
   wait: function wait(){
     if (hero.health >= 1 && hero.stamina < hero.staminaMax) {
       hero.stamina += 8;
-      if (hero.stamina >= hero.staminaMax) {
-        hero.stamina = hero.staminaMax;
-      }
-    console.log("Waiting...");
-    console.log("Your Stamina: " + hero.stamina);
-    area[0].attack(hero);
-    renderSkill(hero.wait.name);
+      if (hero.stamina >= hero.staminaMax) hero.stamina = hero.staminaMax;
+      console.log("Waiting...");
+      console.log("Your Stamina: " + hero.stamina);
+      area[0].attack(hero);
+      renderSkill(hero.wait.name);
     }
   },
   //restore sets health to healthMax. and reduced staming significantly. Then calls enemy attack after.
@@ -131,8 +126,8 @@ var hero = {
 }
 //function to calculate dammage
 function getStrength() {
-var dammage = (Math.floor(Math.random() * hero.strength) + hero.level + hero.strengthMod);
-return dammage;
+  var dammage = (Math.floor(Math.random() * hero.strength) + hero.level + hero.strengthMod);
+  return dammage;
 }
 
 //Items
@@ -189,7 +184,7 @@ var item = {
 
 //Enemy Consructor Function
 
-var Enemy = function Enemy(name, health, strength, exp, currentEnemy){
+var Enemy = function Enemy(name, health, strength, exp){
   this.name = name;
   this.health = health;
   this.strength = strength;
@@ -210,16 +205,12 @@ Enemy.prototype.attack = function(hero) {
       area.shift();
       enemyLV += 1;
       hero.enemyDefeated += 1;
-      if (this.name === "chest") {
-        getItem();
-      }
+      if (this.name === "chest") getItem();
       levelUp();
   };
 
 };
 
-//test Constructor function:
-nextEnemy();
 
 //spawn new Enemy at random
 function nextEnemy() {
@@ -274,7 +265,15 @@ function getItem() {
 };
 
 
+
+
+
+
+//----------------
 //RENDER FUNCTIONS
+//----------------
+
+
 
 //Get Input from event listener:
 //Action MENU
@@ -317,8 +316,8 @@ var health = document.getElementById('health');
 var stamina = document.getElementById('stamina');
 
 function renderStats() {
-health.textContent = "Health: " + hero.health;
-stamina.textContent = "Stamina: " + hero.stamina;
+  health.textContent = "Health: " + hero.health;
+  stamina.textContent = "Stamina: " + hero.stamina;
 };
 
 
@@ -330,55 +329,110 @@ var enemyAttack = document.getElementById('dammageTaken');
 
 // Renders enemy avatar
 function renderEnemy() {
-  if (area[0].name === "stalion"){
-    enemyAvatar.style.backgroundImage="url('art/stalion1.png')";
-  } else if (area[0].name === "goul"){
-    enemyAvatar.style.backgroundImage="url('art/soul1.png')";
-  } else if (area[0].name === "skywhale"){
-    enemyAvatar.style.backgroundImage="url('art/skywhale1.png')";
-  } else if (area[0].name === "darkness"){
-    enemyAvatar.style.backgroundImage="url('art/darkness1.png')";
-  } else if (area[0].name === "wasp"){
-    enemyAvatar.style.backgroundImage="url('art/wasp1.png')";
-  } else if (area[0].name === "whyvern"){
-    enemyAvatar.style.backgroundImage="url('art/whyvern1.png')";
-  } else {
-    enemyAvatar.style.backgroundImage="url('art/chest.png')";
-  }
+  enemyAvatar.style.backgroundImage = getAvatarBgImg();
 };
 
+function getAvatarBgImg() {
+  if (area[0].name === "stalion") return "url('art/stalion1.png')";
+  if (area[0].name === "goul") return "url('art/soul1.png')";
+  if (area[0].name === "skywhale") return "url('art/skywhale1.png')";
+  if (area[0].name === "darkness") return "url('art/darkness1.png')";
+  if (area[0].name === "wasp") return "url('art/wasp1.png')";
+  if (area[0].name === "whyvern") return "url('art/whyvern1.png')";
+  if (area[0].name === "chest") return "url('art/chest.png')";
+};
+
+//renders a graphical representation of the skill used
 function renderSkill(skill) {
-  if (skill == undefined) {
-    enemydammage.style.backgroundImage="url('art/none.png')";
-  }
-    var src = 'url("art/' + skill + '.png")';
-    enemydammage.style.backgroundImage=src;
-    renderStats();
+  enemydammage.style.backgroundImage = 'url("art/' + skill + '.png")';
+  renderStats();
 };
 
-var playerStats = document.getElementById('player');
-
+//render a Menu for statistics
 function renderPlayerStats() {
   var $newDiv = $('<div>');
   $newDiv.attr("id","player");
-  console.log($newDiv);
   $newDiv.appendTo('div#area.background');
   var $newUL = $('<ul>');
   $newUL.appendTo($newDiv);
+// Render all major stats of the hero object
   for (var i = 0; i < 10; i++) {
     var $newLI = $('<li>');
     $newLI.appendTo($newUL);
     $newLI.text([Object.keys(hero)[i + 0]] + ": " + hero[Object.keys(hero)[i + 0]]);
-    console.log($newLI)
   }
+  // make the created menu clickable to remove it
   var playerStats = document.getElementById('player');
   playerStats.addEventListener('click', function() {
-    $('#player').remove()
+    $('#player').remove();
   });
 };
 
 
+//render a menu when level up
+function renderLevelUp() {
+  var lvUp = ["LEVEL UP!", "level: " + hero.level, "health + 15", "stamina + 2", "armor + 2", "strength + 2", "next lv: " + hero.nextLv]
+  var $newDiv = $('<div>');
+  $newDiv.attr("id","playerLvUp");
+  $newDiv.appendTo('div#area.background');
+  var $newUL = $('<ul>');
+  $newUL.appendTo($newDiv);
+// Render all major stats of the hero object
+  for (var i = 0; i < lvUp.length; i++) {
+    var $newLI = $('<li>');
+    $newLI.appendTo($newUL);
+    $newLI.text(lvUp[i]);
+  }
+  // make the created menu clickable to remove it
+  var close = document.getElementById('playerLvUp');
+  close.addEventListener('click', function() {
+    $('#playerLvUp').remove();
+  });
+};
 
+//render a menu for enemy stats
+function renderEnemyStats() {
+  var $newDiv = $('<div>');
+  $newDiv.attr("id","enemyStat");
+  $newDiv.appendTo('div#area.background');
+  var $newUL = $('<ul>');
+  $newUL.appendTo($newDiv);
+// Render all major stats of the hero object
+  for (var i = 0; i < 4; i++) {
+    var $newLI = $('<li>');
+    $newLI.appendTo($newUL);
+    $newLI.text([Object.keys(area[0])[i + 0]] + ": " + area[0][Object.keys(area[0])[i + 0]]);
+  };
+  // make the created menu clickable to remove it
+  var enemysStats = document.getElementById('enemyStat');
+  enemysStats.addEventListener('click', function() {
+    $('#enemyStat').remove();
+  });
+  // $newDiv.background.url = getAvatarBgImg();
+  enemysStats.style.backgroundImage = getAvatarBgImg();
+};
+
+
+
+
+//Add event listener to run renderPlayerStats
+var getStats = document.getElementById('statusMenu');
+getStats.addEventListener('click', function(){
+  renderPlayerStats();
+});
+
+//Add event listener to run renderPlayerStats
+var getStats = document.getElementById('enemy');
+getStats.addEventListener('click', function(){
+  renderEnemyStats();
+});
+
+
+
+
+
+//test game:
+nextEnemy();
 renderSkill();
 renderEnemy();
 

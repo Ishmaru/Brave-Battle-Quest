@@ -63,7 +63,7 @@ ul {
 
 #player > ul, #playerLvUp > ul, #enemyStat > ul {
   margin-left: 300px;
-  margin-right: 20px;
+  margin-right: 50px;
 }
 
 #event > ul {
@@ -113,14 +113,6 @@ text-align: center;
   cursor: pointer;
 }
 
-.status {
-  margin:2px 30px 15px 15px;
-  float: right;
-  width: 450px;
-  height: 150px;
-  background: url("../art/playerstatus.png");
-  background-position: 20px;
-}
 
  .status, #player, #playerLvUp, #event, #enemyStat  {
   border-style: solid;
@@ -142,7 +134,7 @@ text-align: center;
   margin:15px 30px 15px 15px;
 }
 
-#dammage, #health, #stamina, #player, #playerLvUp, #event, #enemyStat {
+#dammage, #player, #playerLvUp, #event, #enemyStat {
   font-size: 38px;
   padding-top: 5px;
 }
@@ -155,3 +147,20 @@ text-align: center;
   cursor: pointer;
 }
 
+.status {
+  margin:2px 30px 15px 15px;
+  float: right;
+  width: 450px;
+  height: 150px;
+  background: url("../art/playerstatus.png");
+  background-position: 20px;
+  background-repeat: no-repeat;
+  font-size: 40px;
+}
+#health {
+  margin-top: 17px;
+  margin-bottom: -12px;
+}
+#playerLvUp li, #enemyStat li {
+  margin-top: 30px;
+}
