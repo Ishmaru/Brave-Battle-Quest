@@ -111,6 +111,13 @@ text-align: center;
   cursor: pointer;
 }
 
+#enemy {
+border-radius: 45%;
+}
+#dammage {
+border-radius: 45%;
+}
+
 .status {
   margin:2px 30px 15px 15px;
   float: right;
@@ -120,7 +127,7 @@ text-align: center;
 
 }
 
-.menubox, .status, #enemy, #player, #playerLvUp, #event, #enemyStat  {
+ .status, #player, #playerLvUp, #event, #enemyStat  {
   border-style: solid;
   border-radius: 25px;
   border-color: #0066cc;

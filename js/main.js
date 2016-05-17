@@ -7,17 +7,17 @@ var area = [];
 //the Hero object
 var hero = {
   name: "Akari",
-  level: 1,
+  level: 0,
   health: 100,
   healthMax: 100,
   armor: 0,
   armorMod: 5,
   strength: 15,
-  strengthMod: 1,
-  stamina: 25,
-  staminaMax: 25,
+  strengthMod: 0,
+  stamina: 20,
+  staminaMax: 20,
   exp: 0,
-  nextLv: 20,
+  nextLv: 30,
   enemyDefeated: 0,
   // Attack deals random dammage based on strength + strengthMod * a random number, subtracts stamina, Calls enemy attack after.
   attack: function attack(){
@@ -56,7 +56,6 @@ var hero = {
       console.log("SECRET TECHNIQUE!!!!");
       console.log(area[0].name + " HP: " + area[0].health);
       console.log("Your Stamina: " + hero.stamina);
-      hero.strength /= 3;
       area[0].attack(hero);
       renderSkill(hero.fire.name);
     }
@@ -112,7 +111,6 @@ var hero = {
       console.log("ULTIMATE SECRET TECHNIQUE!!!!");
       console.log(area[0].name + " HP: " + area[0].health);
       console.log("Your Stamina: " + hero.stamina);
-      hero.strength /= 3;
       area[0].attack(hero);
       renderSkill(hero.lightning.name);
     }
@@ -131,22 +129,22 @@ var hero = {
     }
   },
 }
-
+//function to calculate dammage
 function getStrength() {
-var dammage = (Math.floor(Math.random() * hero.strength) + hero.strengthMod);
+var dammage = (Math.floor(Math.random() * hero.strength) + hero.level + hero.strengthMod);
 return dammage;
 }
 
 //Items
 var item = {
   strengthItem1: function () {
-    hero.strength += 2;
+    hero.strengthMod += 2;
   },
   strengthItem2: function () {
-    hero.strength += 4;
+    hero.strengthMod += 4;
   },
   strengthItem3: function () {
-    hero.strength += 6;
+    hero.strengthMod += 6;
   },
   armorItem1: function () {
     hero.armor += 2;
@@ -202,7 +200,7 @@ var Enemy = function Enemy(name, health, strength, exp, currentEnemy){
 
 Enemy.prototype.attack = function(hero) {
   if (this.health > 0) {
-    hero.health -= (parseInt(Math.random() * (this.strength - hero.armor)));
+    hero.health -= (parseInt(Math.random() * ((this.strength - hero.armor) + 1)));
     console.log(this.name + " Attacks!!!!");
     console.log("Your Health: " + hero.health);
   } else {
@@ -211,6 +209,7 @@ Enemy.prototype.attack = function(hero) {
       console.log("Gained " + this.exp + " Experence!");
       area.shift();
       enemyLV += 1;
+      hero.enemyDefeated += 1;
       if (this.name === "chest") {
         getItem();
       }
@@ -271,6 +270,7 @@ function levelUp() {
 function getItem() {
   var r = Math.floor(Math.random() * 10);
   item[Object.keys(item)[r]]();
+  console.log(item[Object.keys(item)[r]])
 };
 
 
