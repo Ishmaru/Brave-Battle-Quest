@@ -125,7 +125,7 @@ var hero = {
 }
 
 function getStrength() {
-var dammage = (math.floor(Math.random() * (hero.strength + hero.strengthMod)));
+var dammage = (Math.floor(Math.random() * (hero.strength + hero.strengthMod)));
 return dammage;
 }
 
@@ -212,7 +212,7 @@ Enemy.prototype.attack = function(hero) {
 };
 
 //test Constructor function:
-// area.push(new Enemy("whyvern", (10 + (enemyLV * 5)), (25 + enemyLV), (15 + enemyLV)));
+nextEnemy();
 
 //spawn new Enemy at random
 function nextEnemy() {
@@ -263,3 +263,71 @@ function getItem() {
   var r = Math.floor(Math.random() * 10);
   item[Object.keys(item)[r]]();
 };
+
+
+//RENDER FUNCTIONS
+
+//Get Input from event listener:
+//Action MENU
+var attack = document.getElementById('attack');
+attack.addEventListener('click', function() {
+    hero.attack();
+});
+var defend = document.getElementById('defend');
+defend.addEventListener('click', function() {
+    hero.defend();
+});
+var fire = document.getElementById('fire');
+fire.addEventListener('click', function() {
+    hero.fire();
+});
+var heal = document.getElementById('heal');
+heal.addEventListener('click', function() {
+    hero.heal();
+});
+var wait = document.getElementById('wait');
+wait.addEventListener('click', function() {
+    hero.wait();
+});
+var charge = document.getElementById('charge');
+charge.addEventListener('click', function() {
+    hero.charge();
+});
+var lightning = document.getElementById('lightning');
+lightning.addEventListener('click', function() {
+    hero.lightning();
+});
+var restore = document.getElementById('restore');
+restore.addEventListener('click', function() {
+    hero.restore();
+});
+
+//Status Menu
+var ststusMenu = document.getElementById('ststusMenu');
+var health = document.getElementById('health');
+var stamina = document.getElementById('stamina');
+
+function renderStats() {
+health.textContent = "Health: " + hero.health;
+stamina.textContent = "Stamina: " + hero.stamina;
+};
+
+
+
+//Enemy Object
+var enemyAvatar = document.getElementById('enemy');
+var enemydammage = document.getElementById('dammage');
+var enemyAttack = document.getElementById('dammageTaken');
+// function renderEnemy() {
+// enemy.background.url = "../art/stallion.png"
+// };
+
+
+
+
+
+
+
+
+
+
