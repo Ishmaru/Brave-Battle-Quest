@@ -79,6 +79,7 @@ text-align: center;
   height:600px;
   margin-left: 30px;
   float: left;
+  border-radius: 25%;
 }
 
 #dammage {
@@ -88,6 +89,7 @@ text-align: center;
   height:600px;
   background-repeat: no-repeat;
   background-position: -50px;
+  border-radius: 45%;
 }
 
 .button{
@@ -111,20 +113,13 @@ text-align: center;
   cursor: pointer;
 }
 
-#enemy {
-border-radius: 45%;
-}
-#dammage {
-border-radius: 45%;
-}
-
 .status {
   margin:2px 30px 15px 15px;
   float: right;
   width: 450px;
   height: 150px;
   background: url("../art/playerstatus.png");
-
+  background-position: 20px;
 }
 
  .status, #player, #playerLvUp, #event, #enemyStat  {
@@ -148,7 +143,7 @@ border-radius: 45%;
 }
 
 #dammage, #health, #stamina, #player, #playerLvUp, #event, #enemyStat {
-  font-size: 45px;
+  font-size: 38px;
   padding-top: 5px;
 }
 

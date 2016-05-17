@@ -8,17 +8,17 @@ var area = [];
 var hero = {
   name: "Akari",
   level: 0,
-  health: 100,
   healthMax: 100,
   armor: 0,
   armorMod: 5,
   strength: 15,
   strengthMod: 0,
-  stamina: 20,
   staminaMax: 20,
   exp: 0,
   nextLv: 30,
   enemyDefeated: 0,
+  health: 100,
+  stamina: 20,
   // Attack deals random dammage based on strength + strengthMod * a random number, subtracts stamina, Calls enemy attack after.
   attack: function attack(){
     if (hero.health >= 1 && hero.stamina >= 1) {
@@ -354,6 +354,23 @@ function renderSkill(skill) {
     var src = 'url("art/' + skill + '.png")';
     enemydammage.style.backgroundImage=src;
     renderStats();
+};
+
+// var playerStats = document.getElementById('player');
+
+function renderPlayerStats() {
+  var $newDiv = $('<div>');
+  $newDiv.attr("id","player");
+  console.log($newDiv);
+  $newDiv.appendTo('div#area.background');
+  var $newUL = $('<ul>');
+  $newUL.appendTo($newDiv);
+  for (var i = 0; i < 10; i++) {
+    var $newLI = $('<li>');
+    $newLI.appendTo($newUL);
+    $newLI.text([Object.keys(hero)[i + 0]] + ": " + hero[Object.keys(hero)[i + 0]]);
+    console.log($newLI)
+  }
 };
 
 
