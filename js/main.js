@@ -356,7 +356,7 @@ function renderSkill(skill) {
     renderStats();
 };
 
-// var playerStats = document.getElementById('player');
+var playerStats = document.getElementById('player');
 
 function renderPlayerStats() {
   var $newDiv = $('<div>');
@@ -371,6 +371,10 @@ function renderPlayerStats() {
     $newLI.text([Object.keys(hero)[i + 0]] + ": " + hero[Object.keys(hero)[i + 0]]);
     console.log($newLI)
   }
+  var playerStats = document.getElementById('player');
+  playerStats.addEventListener('click', function() {
+    $('#player').remove()
+  });
 };
 
 
