@@ -157,10 +157,16 @@ text-align: center;
   background-repeat: no-repeat;
   font-size: 40px;
 }
+
 #health {
   margin-top: 17px;
   margin-bottom: -12px;
 }
-#playerLvUp li, #enemyStat li {
+
+#playerLvUp li {
   margin-top: 30px;
+}
+
+#enemyStat li {
+  margin-top: 60px;
 }

@@ -205,8 +205,9 @@ Enemy.prototype.attack = function(hero) {
       area.shift();
       enemyLV += 1;
       hero.enemyDefeated += 1;
-      if (this.name === "chest") getItem();
+      hero.stamina += 5;
       levelUp();
+      if (this.name === "chest") getItem();
   };
 
 };
@@ -243,7 +244,8 @@ function levelUp() {
     hero.health = hero.healthMax;
     hero.armor += 2;
     hero.strength += 2;
-    hero.stamina += 2;
+    hero.staminaMax += 2;
+    hero.stamina = hero.staminaMax;
     hero.exp = 0;
     hero.nextLv *= 1.5;
     console.log("LEVEL UP!!!!");
@@ -251,6 +253,7 @@ function levelUp() {
     console.log("Armor + 2");
     console.log("Strength + 2");
     console.log("Stamina + 2");
+    renderLevelUp();
   };
   nextEnemy();
   renderEnemy();
