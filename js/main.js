@@ -318,10 +318,24 @@ stamina.textContent = "Stamina: " + hero.stamina;
 var enemyAvatar = document.getElementById('enemy');
 var enemydammage = document.getElementById('dammage');
 var enemyAttack = document.getElementById('dammageTaken');
-// function renderEnemy() {
-// enemy.background.url = "../art/stallion.png"
-// };
 
+function renderEnemy() {
+  if (area[0].name === "stalion"){
+    enemy.style.backgroundImage="url('art/stalion1.png')";
+  } else if (area[0].name === "goul"){
+    enemy.style.backgroundImage="url('art/soul1.png')";
+  } else if (area[0].name === "skywhale"){
+    enemy.style.backgroundImage="url('art/skywhale1.png')";
+  } else if (area[0].name === "darkness"){
+    enemy.style.backgroundImage="url('art/darkness1.png')";
+  } else if (area[0].name === "wasp"){
+    enemy.style.backgroundImage="url('art/wasp1.png')";
+  } else if (area[0].name === "whyvern"){
+    enemy.style.backgroundImage="url('art/whyvern1.png')";
+  } else {
+    enemy.style.backgroundImage="url('art/chest.png')";
+  }
+};
 
 
 
