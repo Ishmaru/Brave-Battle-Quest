@@ -132,25 +132,31 @@ function getStrength() {
 
 //Items
 var item = {
-  strengthItem1: function () {
+  strengthitem1: function strengthitem1() {
     hero.strengthMod += 2;
+    renderGetItem(item.strengthitem1.name, "Strength: + 2", "Dagger");
   },
-  strengthItem2: function () {
+  strengthitem2: function strengthitem2() {
     hero.strengthMod += 4;
+    renderGetItem(item.strengthitem2.name, "Strength: + 4", "Sword");
   },
-  strengthItem3: function () {
+  strengthitem3: function strengthitem3() {
     hero.strengthMod += 6;
+    renderGetItem(item.strengthitem3.name, "Strength: + 6", "Axe");
   },
-  armorItem1: function () {
+  armoritem1: function armoritem1() {
     hero.armor += 2;
+    renderGetItem(item.armoritem1.name, "Armor: + 2", "Helmit");
   },
-  armorItem2: function () {
+  armoritem2: function armoritem2() {
     hero.armor += 4;
+    renderGetItem(item.armoritem2.name, "Armor: + 4", "Shield");
   },
-  armorItem3: function () {
+  armoritem3: function armoritem3() {
     hero.armor += 6;
+    renderGetItem(item.armoritem3.name, "Armor: + 6", "Breastplate");
   },
-  magicOrb: function () {
+  magicorb: function magicorb() {
     hero.level += 1;
     hero.healthMax += 15;
     hero.health = hero.healthMax;
@@ -159,28 +165,31 @@ var item = {
     hero.stamina += 2;
     hero.exp = 0;
     hero.nextLv *= 1.5;
-    console.log("LEVEL UP!!!!");
-    console.log("Health + 15");
-    console.log("Armor + 2");
-    console.log("Strength + 2");
-    console.log("Stamina + 2");
+    Math.floor(hero.nextLv);
+    renderGetItem(item.magicorb.name, "Level Up!", "Magic Tome");
   },
-  vitalityCrystal: function () {
+  vitalitycrystal: function vitalitycrystal() {
     hero.healthMax += 15;
     hero.health = hero.healthMax;
+    renderGetItem(item.vitalitycrystal.name, "Max Health: + 15", "Vital Crystal");
   },
-  staminaRing: function () {
+  staminashard: function staminashard() {
     hero.staminaMax += 5;
     hero.stamina = hero.staminaMax;
+    renderGetItem(item.staminashard.name, "Max Stamina: + 5", "Stamina Shard");
   },
-  luckCharm: function () {
+  luckcharm: function luckcharm() {
     enemyLV -= 1;
+    renderGetItem(item.luckcharm.name, "Enemy Lv Down!", "Luck Charm");
   }
 };
 
-
-
-
+// random generates a new Item
+function getItem() {
+  var r = Math.floor(Math.random() * 10);
+  item[Object.keys(item)[r]]();
+  console.log(item[Object.keys(item)[r]]);
+};
 
 //Enemy Consructor Function
 
@@ -209,7 +218,6 @@ Enemy.prototype.attack = function(hero) {
       levelUp();
       if (this.name === "chest") getItem();
   };
-
 };
 
 
@@ -260,12 +268,6 @@ function levelUp() {
 };
 
 
-// random generates a new Item
-function getItem() {
-  var r = Math.floor(Math.random() * 10);
-  item[Object.keys(item)[r]]();
-  console.log(item[Object.keys(item)[r]])
-};
 
 
 
@@ -400,7 +402,7 @@ function renderEnemyStats() {
   $newDiv.appendTo('div#area.background');
   var $newUL = $('<ul>');
   $newUL.appendTo($newDiv);
-// Render all major stats of the hero object
+// Render all major stats of the Enemy object inside area array
   for (var i = 0; i < 4; i++) {
     var $newLI = $('<li>');
     $newLI.appendTo($newUL);
@@ -413,6 +415,33 @@ function renderEnemyStats() {
   });
   // $newDiv.background.url = getAvatarBgImg();
   enemysStats.style.backgroundImage = getAvatarBgImg();
+};
+
+
+//render a menu when item collect
+function renderGetItem(itemR, itemB, itemN) {
+  console.log(itemR);
+  var $newDiv = $('<div>');
+  $newDiv.attr("id","event");
+  $newDiv.appendTo('div#area.background');
+  var $newUL = $('<ul>');
+  $newUL.appendTo($newDiv);
+  var $newLI = $('<li>');
+  $newLI.text('NEW ITEM!!!');
+  $newLI.appendTo($newUL);
+  $newLI = $('<li>');
+  $newLI.text(itemN);
+  $newLI.appendTo($newUL);
+  $newLI = $('<li>');
+  $newLI.text(itemB);
+  $newLI.appendTo($newUL);
+  // make the created menu clickable to remove it
+  var itemGet = document.getElementById('event');
+  itemGet.addEventListener('click', function() {
+    $('#event').remove();
+  });
+  // Render item:
+  itemGet.style.backgroundImage = 'url("art/' + itemR + '.png")';
 };
 
 

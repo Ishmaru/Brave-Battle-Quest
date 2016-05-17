@@ -53,7 +53,7 @@ body {
 }
 
 #event{
-  background-position: -600px;
+  background-position: 100px 5px;
   text-align: center;
 }
 
@@ -69,6 +69,7 @@ ul {
 #event > ul {
 float: center;
 text-align: center;
+margin-top: 450px;
 }
 
 
