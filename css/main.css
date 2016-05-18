@@ -5,7 +5,7 @@ body {
   text-align: center;
 }
 
-.background {
+.background, .dead {
   /*display: inline-block;*/
   background: url("../art/area2.jpg");
   width: 1050px;
@@ -170,4 +170,10 @@ margin-top: 450px;
 
 #enemyStat li {
   margin-top: 60px;
+}
+
+.dead {
+  border-color: red;
+  background-color: red;
+  background: url("../art/enemyattack.png");
 }

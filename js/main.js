@@ -43,6 +43,11 @@ var hero = {
   }
 };
 
+//Check to see if you have died
+function deadCheck() {
+  if (hero.health <= 0) fadeDeath();
+}
+
 //function to calculate player dammage
 function getStrength() {
   var dammage = (Math.floor(Math.random() * hero.strength) + hero.level + hero.strengthMod);
@@ -130,6 +135,7 @@ Enemy.prototype.attack = function(hero) {
       hero.health -= enemyCalculation(area[0]);
       attackedFade();
       renderHealth();
+      deadCheck();
     }, 1000);
   } else {
       hero.exp += this.exp;
@@ -210,7 +216,7 @@ wait.addEventListener('click', function() {
 });
 var charge = document.getElementById('charge');
 charge.addEventListener('click', function() {
-  hero.move("charge", 0, 25, 1, 0, -hero.armorMod);
+  hero.move("charge", 0, 25, 0, 0, -hero.armorMod);
 });
 var lightning = document.getElementById('lightning');
 lightning.addEventListener('click', function() {
@@ -395,6 +401,14 @@ function spellFadein() {
     } );
 };
 
+function fadeDeath() {
+  // $('#area').style.backgroundImage = 'url("art/enemyattack.png")';
+  $('.button').remove();
+  $('.status').remove();
+  $('#area').attr("class","dead");
+  $('#area').fadeOut(4000, function() {
+  });
+}
 
 //test game:
 nextEnemy();
