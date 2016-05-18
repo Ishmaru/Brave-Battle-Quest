@@ -74,7 +74,7 @@ margin-top: 450px;
 
 
 #enemy {
-  background: url("../art/whyvern1.png");
+  background: url("../art/undefined.png");
   background-size: 500px;
   width:500px;
   height:600px;
@@ -84,7 +84,7 @@ margin-top: 450px;
 }
 
 #dammage {
-  background: url("../art/attack.png");
+  background: url("../art/undefined.png");
   background-size: 600px;
   width:500px;
   height:600px;

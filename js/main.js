@@ -25,9 +25,6 @@ var hero = {
     if (hero.health >= 1 && hero.stamina >= 1) {
       area[0].health -= getStrength();
       hero.stamina -= 1;
-      console.log("ATTACK!");
-      console.log(area[0].name + " HP: " + area[0].health);
-      console.log("Your Stamina: " + hero.stamina);
       area[0].attack(hero);
       renderSkill(hero.attack.name);
     }
@@ -38,9 +35,6 @@ var hero = {
       hero.stamina += 1;
       hero.armor += hero.armorMod;
       if (hero.stamina >= hero.staminaMax) hero.stamina = hero.staminaMax;
-      console.log("Defending...");
-      console.log("Your Armor: " + hero.armor);
-      console.log("Your Stamina: " + hero.stamina);
       area[0].attack(hero);
       hero.armor -= hero.armorMod;
       renderSkill(hero.defend.name);
@@ -52,9 +46,6 @@ var hero = {
       // area[0].health -=(parseInt(Math.random() * (hero.strength + hero.strengthMod)));
       area[0].health -= getStrength() * 2;
       hero.stamina -= 5;
-      console.log("SECRET TECHNIQUE!!!!");
-      console.log(area[0].name + " HP: " + area[0].health);
-      console.log("Your Stamina: " + hero.stamina);
       area[0].attack(hero);
       renderSkill(hero.fire.name);
     }
@@ -65,9 +56,6 @@ var hero = {
       hero.health += 50;
       hero.stamina -= 10;
       if (hero.health >= hero.healthMax) hero.health = hero.healthMax;
-      console.log("Fisrt Aid.");
-      console.log("Your Health: " + hero.health);
-      console.log("Your Stamina: " + hero.stamina);
       area[0].attack(hero);
       renderSkill(hero.heal.name);
     }
@@ -77,8 +65,6 @@ var hero = {
     if (hero.health >= 1 && hero.stamina < hero.staminaMax) {
       hero.stamina += 8;
       if (hero.stamina >= hero.staminaMax) hero.stamina = hero.staminaMax;
-      console.log("Waiting...");
-      console.log("Your Stamina: " + hero.stamina);
       area[0].attack(hero);
       renderSkill(hero.wait.name);
     }
@@ -91,9 +77,6 @@ var hero = {
       if (hero.health >= hero.healthMax) {
         hero.health = hero.healthMax;
       }
-      console.log("Fisrt Aid.");
-      console.log("Your Health: " + hero.health);
-      console.log("Your Stamina: " + hero.stamina);
       area[0].attack(hero);
       renderSkill(hero.restore.name);
     }
@@ -103,9 +86,6 @@ var hero = {
     if (hero.health >= 1 && hero.stamina >= 5) {
       area[0].health -= getStrength() * 5
       hero.stamina -= 15;
-      console.log("ULTIMATE SECRET TECHNIQUE!!!!");
-      console.log(area[0].name + " HP: " + area[0].health);
-      console.log("Your Stamina: " + hero.stamina);
       area[0].attack(hero);
       renderSkill(hero.lightning.name);
     }
@@ -115,9 +95,7 @@ var hero = {
     if (hero.health >= 1 && hero.stamina < hero.staminaMax) {
       hero.stamina = hero.staminaMax;
       var armortemp = hero.armorMod;
-      hero.armorMod -= (hero.armorMod * -1.5);
-    console.log("Waiting...");
-    console.log("Your Stamina: " + hero.stamina);
+      hero.armorMod -= (hero.armorMod * -2);
     area[0].attack(hero);
     hero.armorMod = armortemp;
     renderSkill(hero.charge.name);
@@ -145,16 +123,16 @@ var item = {
     renderGetItem(item.strengthitem3.name, "Strength: + 6", "Axe");
   },
   armoritem1: function armoritem1() {
-    hero.armor += 2;
-    renderGetItem(item.armoritem1.name, "Armor: + 2", "Helmit");
+    hero.armorMod += 1;
+    renderGetItem(item.armoritem1.name, "Armor: + 1", "Helmit");
   },
   armoritem2: function armoritem2() {
-    hero.armor += 4;
-    renderGetItem(item.armoritem2.name, "Armor: + 4", "Shield");
+    hero.armorMod += 2;
+    renderGetItem(item.armoritem2.name, "Armor: + 2", "Shield");
   },
   armoritem3: function armoritem3() {
-    hero.armor += 6;
-    renderGetItem(item.armoritem3.name, "Armor: + 6", "Breastplate");
+    hero.armorMod += 3;
+    renderGetItem(item.armoritem3.name, "Armor: + 3", "Breastplate");
   },
   magicorb: function magicorb() {
     hero.level += 1;
@@ -188,7 +166,6 @@ var item = {
 function getItem() {
   var r = Math.floor(Math.random() * 10);
   item[Object.keys(item)[r]]();
-  console.log(item[Object.keys(item)[r]]);
 };
 
 //Enemy Consructor Function
@@ -205,19 +182,16 @@ var Enemy = function Enemy(name, health, strength, exp){
 Enemy.prototype.attack = function(hero) {
   if (this.health > 0) {
     hero.health -= (parseInt(Math.random() * ((this.strength - hero.armor) + 1)));
-    console.log(this.name + " Attacks!!!!");
-    console.log("Your Health: " + hero.health);
   } else {
-      console.log(this.name + " Defeated!");
       hero.exp += this.exp;
-      console.log("Gained " + this.exp + " Experence!");
       area.shift();
       enemyLV += 1;
       hero.enemyDefeated += 1;
-      hero.stamina += 5;
-      levelUp();
+      hero.stamina += 1;
+      enemyDie();
       if (this.name === "chest") getItem();
   };
+    renderStats();
 };
 
 
@@ -239,7 +213,6 @@ function nextEnemy() {
   } else {
       area.push(new Enemy("chest", 0.000001, 0, 0));
   };
-
   console.log("A new Opponent Approaches!");
   console.log(area[0]);
 };
@@ -250,17 +223,12 @@ function levelUp() {
     hero.level += 1;
     hero.healthMax += 15;
     hero.health = hero.healthMax;
-    hero.armor += 2;
-    hero.strength += 2;
+    hero.armor += 1;
+    hero.strength += 1;
     hero.staminaMax += 2;
     hero.stamina = hero.staminaMax;
     hero.exp = 0;
     hero.nextLv *= 1.5;
-    console.log("LEVEL UP!!!!");
-    console.log("Health + 15");
-    console.log("Armor + 2");
-    console.log("Strength + 2");
-    console.log("Stamina + 2");
     renderLevelUp();
   };
   nextEnemy();
@@ -284,35 +252,46 @@ function levelUp() {
 //Action MENU
 var attack = document.getElementById('attack');
 attack.addEventListener('click', function() {
+    spellFadein();
     hero.attack();
+  //   $('#attack').fadeIn('fast', function() {
+  //     spellFadeOut();
+  // });
 });
 var defend = document.getElementById('defend');
 defend.addEventListener('click', function() {
-    hero.defend();
+  spellFadein();
+  hero.defend();
 });
 var fire = document.getElementById('fire');
 fire.addEventListener('click', function() {
-    hero.fire();
+  spellFadein();
+  hero.fire();
 });
 var heal = document.getElementById('heal');
 heal.addEventListener('click', function() {
-    hero.heal();
+  spellFadein();
+  hero.heal();
 });
 var wait = document.getElementById('wait');
 wait.addEventListener('click', function() {
-    hero.wait();
+  spellFadein();
+  hero.wait();
 });
 var charge = document.getElementById('charge');
 charge.addEventListener('click', function() {
-    hero.charge();
+  spellFadein();
+  hero.charge();
 });
 var lightning = document.getElementById('lightning');
 lightning.addEventListener('click', function() {
-    hero.lightning();
+  spellFadein();
+  hero.lightning();
 });
 var restore = document.getElementById('restore');
 restore.addEventListener('click', function() {
-    hero.restore();
+  spellFadein();
+  hero.restore();
 });
 
 //Status Menu
@@ -334,6 +313,8 @@ var enemyAttack = document.getElementById('dammageTaken');
 
 // Renders enemy avatar
 function renderEnemy() {
+  $('#enemy').fadeIn('fast', function() {
+  });
   enemyAvatar.style.backgroundImage = getAvatarBgImg();
 };
 
@@ -350,7 +331,7 @@ function getAvatarBgImg() {
 //renders a graphical representation of the skill used
 function renderSkill(skill) {
   enemydammage.style.backgroundImage = 'url("art/' + skill + '.png")';
-  renderStats();
+  // renderStats();
 };
 
 //render a Menu for statistics
@@ -376,7 +357,7 @@ function renderPlayerStats() {
 
 //render a menu when level up
 function renderLevelUp() {
-  var lvUp = ["LEVEL UP!", "level: " + hero.level, "health + 15", "stamina + 2", "armor + 2", "strength + 2", "next lv: " + hero.nextLv]
+  var lvUp = ["LEVEL UP!", "level: " + hero.level, "health + 15", "stamina + 2", "armor + 1", "strength + 1", "next lv: " + hero.nextLv]
   var $newDiv = $('<div>');
   $newDiv.attr("id","playerLvUp");
   $newDiv.appendTo('div#area.background');
@@ -393,6 +374,7 @@ function renderLevelUp() {
   close.addEventListener('click', function() {
     $('#playerLvUp').remove();
   });
+  renderStats();
 };
 
 //render a menu for enemy stats
@@ -420,7 +402,6 @@ function renderEnemyStats() {
 
 //render a menu when item collect
 function renderGetItem(itemR, itemB, itemN) {
-  console.log(itemR);
   var $newDiv = $('<div>');
   $newDiv.attr("id","event");
   $newDiv.appendTo('div#area.background');
@@ -459,14 +440,43 @@ getStats.addEventListener('click', function(){
   renderEnemyStats();
 });
 
+//__________
+//Animation
+//__________
 
 
+// $( "#clickme" ).click(function() {
+//   $( "#book" ).fadeOut( "slow", function() {
+//     // Animation complete.
+//   });
+// });
+function enemyDie() {
+  $("#enemy").fadeOut(2000, function() {
+    levelUp();
+    // nextEnemy();
+    renderEnemy();
+  }
+)};
+// function enemySpawn() {
+//   $('#enemy').fadeIn('fast', function() {
+//   });
+// }
 
+function spellFadeOut() {
+  $('#dammage').fadeOut('slow', function() {
+    enemydammage.style.backgroundImage = 'url("art/undefined.png")';
+  });
+};
+function spellFadein() {
+    $('#dammage').fadeIn('fast', function(){
+      spellFadeOut();
+    } );
+};
 
 //test game:
 nextEnemy();
-renderSkill();
+// renderSkill();
 renderEnemy();
-
+// spellFadeOut();
 
 
