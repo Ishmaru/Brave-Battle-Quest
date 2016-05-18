@@ -20,93 +20,122 @@ var hero = {
   enemyDefeated: 0,
   health: 100,
   stamina: 20,
-  // Attack deals random dammage based on strength + strengthMod * a random number, subtracts stamina, Calls enemy attack after.
-  attack: function attack(){
-    if (hero.health >= 1 && hero.stamina >= 1) {
-      area[0].health -= getStrength();
-      hero.stamina -= 1;
-      area[0].attack(hero);
-      renderSkill(hero.attack.name);
-    }
-  },
-  // Defend increases armor by armorMod, Increases stamina by 1, Calls enemy attack, then returns armor to its state before function.
-  defend: function defend(){
-    if (hero.health >= 1) {;
-      hero.stamina += 1;
-      hero.armor += hero.armorMod;
-      if (hero.stamina >= hero.staminaMax) hero.stamina = hero.staminaMax;
-      area[0].attack(hero);
-      hero.armor -= hero.armorMod;
-      renderSkill(hero.defend.name);
-    }
-  },
-  //fire deals random dammage based on strength + strengthMod  * a random number, subtracts lots of stamina, Calls enemy attack after.
-  fire: function fire(){
-    if (hero.health >= 1 && hero.stamina >= 5) {
-      // area[0].health -=(parseInt(Math.random() * (hero.strength + hero.strengthMod)));
-      area[0].health -= getStrength() * 2;
-      hero.stamina -= 5;
-      area[0].attack(hero);
-      renderSkill(hero.fire.name);
-    }
-  },
-  //heal increases health by 50 but not past value of healthMax. If health is greater, health sets to healthMax. Then calls enemy attack after.
-  heal: function heal(){
-    if (hero.health >= 1 && (hero.health < hero.healthMax) && hero.stamina >= 10) {
-      hero.health += 50;
-      hero.stamina -= 10;
-      if (hero.health >= hero.healthMax) hero.health = hero.healthMax;
-      area[0].attack(hero);
-      renderSkill(hero.heal.name);
-    }
-  },
-  //wait restores stamina, and calls enemy attack.
-  wait: function wait(){
-    if (hero.health >= 1 && hero.stamina < hero.staminaMax) {
-      hero.stamina += 8;
-      if (hero.stamina >= hero.staminaMax) hero.stamina = hero.staminaMax;
-      area[0].attack(hero);
-      renderSkill(hero.wait.name);
-    }
-  },
-  //restore sets health to healthMax. and reduced staming significantly. Then calls enemy attack after.
-  restore: function restore(){
-    if (hero.health >= 1 && (hero.health < hero.healthMax) && hero.stamina >= 25) {
-      hero.health = hero.healthMax;
-      hero.stamina -= 25;
-      if (hero.health >= hero.healthMax) {
-        hero.health = hero.healthMax;
+  // move handles status changes on hero + enemy in area [0]
+  move: function move(moveName, sCost, sCharge, xDammage, heal, armorBoost) {
+    if (hero.health >= 1 && (sCost < hero.stamina)) {
+      area[0].health -= getStrength() * xDammage;
+      hero.armor += armorBoost;
+      hero.stamina -= sCost;
+      hero.stamina += sCharge;
+      hero.health += heal;
+      if (hero.health > hero.healthMax) {
+        hero.health = hero.healthMax
+      }
+      if (hero.stamina > hero.staminaMax) {
+        hero.stamina = hero.staminaMax;
       }
       area[0].attack(hero);
-      renderSkill(hero.restore.name);
+      hero.armor -= armorBoost;
+      renderSkill(moveName);
+      spellFadein();
     }
-  },
-  //lightning deals random dammage based on strength + strengthMod  * a random number, subtracts lots of stamina, Calls enemy attack after.
-  lightning: function lightning(){
-    if (hero.health >= 1 && hero.stamina >= 5) {
-      area[0].health -= getStrength() * 5
-      hero.stamina -= 15;
-      area[0].attack(hero);
-      renderSkill(hero.lightning.name);
-    }
-  },
-  //Charge reduces armor by armorMod * -1.5, sets stamina to the max value, then calls enemy attack.
-  charge: function charge(){
-    if (hero.health >= 1 && hero.stamina < hero.staminaMax) {
-      hero.stamina = hero.staminaMax;
-      var armortemp = hero.armorMod;
-      hero.armorMod -= (hero.armorMod * -2);
-    area[0].attack(hero);
-    hero.armorMod = armortemp;
-    renderSkill(hero.charge.name);
-    }
-  },
-}
-//function to calculate dammage
+  }
+};
+  //// Attack deals random dammage based on strength + strengthMod * a random number, subtracts stamina, Calls enemy attack after.
+  // attack: function attack(){
+  //   if (hero.health >= 1 && hero.stamina >= 1) {
+  //     area[0].health -= getStrength();
+  //     hero.stamina -= 1;
+  //     area[0].attack(hero);
+  //     renderSkill(hero.attack.name);
+  //   }
+  // },
+  // // Defend increases armor by armorMod, Increases stamina by 1, Calls enemy attack, then returns armor to its state before function.
+  // defend: function defend(){
+  //   if (hero.health >= 1) {;
+  //     hero.stamina += 1;
+  //     hero.armor += hero.armorMod;
+  //     if (hero.stamina >= hero.staminaMax) hero.stamina = hero.staminaMax;
+  //     area[0].attack(hero);
+  //     hero.armor -= hero.armorMod;
+  //     renderSkill(hero.defend.name);
+  //   }
+  // },
+  // //fire deals random dammage based on strength + strengthMod  * a random number, subtracts lots of stamina, Calls enemy attack after.
+  // fire: function fire(){
+  //   if (hero.health >= 1 && hero.stamina >= 5) {
+  //     // area[0].health -=(parseInt(Math.random() * (hero.strength + hero.strengthMod)));
+  //     area[0].health -= getStrength() * 2;
+  //     hero.stamina -= 5;
+  //     area[0].attack(hero);
+  //     renderSkill(hero.fire.name);
+  //   }
+  // },
+  // //heal increases health by 50 but not past value of healthMax. If health is greater, health sets to healthMax. Then calls enemy attack after.
+  // heal: function heal(){
+  //   if (hero.health >= 1 && (hero.health < hero.healthMax) && hero.stamina >= 10) {
+  //     hero.health += 50;
+  //     hero.stamina -= 10;
+  //     if (hero.health >= hero.healthMax) hero.health = hero.healthMax;
+  //     area[0].attack(hero);
+  //     renderSkill(hero.heal.name);
+  //   }
+  // },
+  // //wait restores stamina, and calls enemy attack.
+  // wait: function wait(){
+  //   if (hero.health >= 1 && hero.stamina < hero.staminaMax) {
+  //     hero.stamina += 8;
+  //     if (hero.stamina >= hero.staminaMax) hero.stamina = hero.staminaMax;
+  //     area[0].attack(hero);
+  //     renderSkill(hero.wait.name);
+  //   }
+  // },
+  // //restore sets health to healthMax. and reduced staming significantly. Then calls enemy attack after.
+  // restore: function restore(){
+  //   if (hero.health >= 1 && (hero.health < hero.healthMax) && hero.stamina >= 25) {
+  //     hero.health = hero.healthMax;
+  //     hero.stamina -= 25;
+  //     if (hero.health >= hero.healthMax) {
+  //       hero.health = hero.healthMax;
+  //     }
+  //     area[0].attack(hero);
+  //     renderSkill(hero.restore.name);
+  //   }
+  // },
+  // //lightning deals random dammage based on strength + strengthMod  * a random number, subtracts lots of stamina, Calls enemy attack after.
+  // lightning: function lightning(){
+  //   if (hero.health >= 1 && hero.stamina >= 15) {
+  //     area[0].health -= getStrength() * 5
+  //     hero.stamina -= 15;
+  //     area[0].attack(hero);
+  //     renderSkill(hero.lightning.name);
+  //   }
+  // },
+  // //Charge reduces armor by armorMod * -1.5, sets stamina to the max value, then calls enemy attack.
+  // charge: function charge(){
+  //   if (hero.health >= 1 && hero.stamina < hero.staminaMax) {
+  //     hero.stamina = hero.staminaMax;
+  //     var armortemp = hero.armorMod;
+  //     hero.armorMod -= (hero.armorMod * -2);
+  //   area[0].attack(hero);
+  //   hero.armorMod = armortemp;
+  //   renderSkill(hero.charge.name);
+  //   }
+  // },
+
+
+
+//function to calculate player dammage
 function getStrength() {
   var dammage = (Math.floor(Math.random() * hero.strength) + hero.level + hero.strengthMod);
   return dammage;
-}
+};
+
+//calculate enemy dammage
+function enemyCalculation(attacker) {
+  var dammage = (parseInt(Math.random() * ((attacker.strength - hero.armor) + 1)));
+  return dammage;
+};
 
 //Items
 var item = {
@@ -181,7 +210,7 @@ var Enemy = function Enemy(name, health, strength, exp){
 
 Enemy.prototype.attack = function(hero) {
   if (this.health > 0) {
-    hero.health -= (parseInt(Math.random() * ((this.strength - hero.armor) + 1)));
+    hero.health -= enemyCalculation(this);
   } else {
       hero.exp += this.exp;
       area.shift();
@@ -213,8 +242,6 @@ function nextEnemy() {
   } else {
       area.push(new Enemy("chest", 0.000001, 0, 0));
   };
-  console.log("A new Opponent Approaches!");
-  console.log(area[0]);
 };
 
 //Levels up character stats if exp > nextLV then/or runs next enemy
@@ -247,51 +274,40 @@ function levelUp() {
 //----------------
 
 
-
+// (moveName, sCost, sCharge, xDammage, heal, armorBoost)
 //Get Input from event listener:
 //Action MENU
 var attack = document.getElementById('attack');
 attack.addEventListener('click', function() {
-    spellFadein();
-    hero.attack();
-  //   $('#attack').fadeIn('fast', function() {
-  //     spellFadeOut();
-  // });
+    hero.move("attack", 1, 0, 1, 0, 0);
 });
 var defend = document.getElementById('defend');
 defend.addEventListener('click', function() {
-  spellFadein();
-  hero.defend();
+  hero.move("defend", 0, 1, 0, 0, hero.armorMod);
 });
 var fire = document.getElementById('fire');
 fire.addEventListener('click', function() {
-  spellFadein();
-  hero.fire();
+  hero.move("fire", 5, 0, 2, 0, 0);
 });
 var heal = document.getElementById('heal');
 heal.addEventListener('click', function() {
-  spellFadein();
-  hero.heal();
+  hero.move("heal", 10, 0, 0, 50, 0);
 });
 var wait = document.getElementById('wait');
 wait.addEventListener('click', function() {
-  spellFadein();
-  hero.wait();
+  hero.move("wait", 0, 10, 0, 0, 0);
 });
 var charge = document.getElementById('charge');
 charge.addEventListener('click', function() {
-  spellFadein();
-  hero.charge();
+  hero.move("charge", 0, 25, 1, 0, -hero.armorMod);
 });
 var lightning = document.getElementById('lightning');
 lightning.addEventListener('click', function() {
-  spellFadein();
-  hero.lightning();
+  hero.move("lightning", 15, 0, 5, 0, 0);
 });
 var restore = document.getElementById('restore');
 restore.addEventListener('click', function() {
-  spellFadein();
-  hero.restore();
+  hero.move("restore", 20, 0, 0, 150, 0);
 });
 
 //Status Menu
@@ -445,22 +461,12 @@ getStats.addEventListener('click', function(){
 //__________
 
 
-// $( "#clickme" ).click(function() {
-//   $( "#book" ).fadeOut( "slow", function() {
-//     // Animation complete.
-//   });
-// });
 function enemyDie() {
   $("#enemy").fadeOut(2000, function() {
     levelUp();
-    // nextEnemy();
     renderEnemy();
   }
 )};
-// function enemySpawn() {
-//   $('#enemy').fadeIn('fast', function() {
-//   });
-// }
 
 function spellFadeOut() {
   $('#dammage').fadeOut('slow', function() {
@@ -472,6 +478,8 @@ function spellFadein() {
       spellFadeOut();
     } );
 };
+
+
 
 //test game:
 nextEnemy();
