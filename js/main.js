@@ -1,3 +1,6 @@
+// enables/disables player moves
+var input = false;
+
 //Level modifier for enemies Increases per enemy defeat
 var enemyLV = 0;
 
@@ -15,13 +18,13 @@ var hero = {
   strengthMod: 0,
   staminaMax: 20,
   exp: 0,
-  nextLv: 30,
+  nextLv: 25,
   enemyDefeated: 0,
   health: 100,
   stamina: 20,
   // move handles status changes on hero + enemy in area [0]
   move: function move(moveName, sCost, sCharge, xDammage, heal, armorBoost) {
-    if (hero.health >= 1 && (sCost < hero.stamina)) {
+    if (hero.health >= 1 && (sCost <= hero.stamina)) {
       area[0].health -= getStrength() * xDammage;
       hero.armor += armorBoost;
       hero.stamina -= sCost;
@@ -33,7 +36,7 @@ var hero = {
       if (hero.stamina > hero.staminaMax) {
         hero.stamina = hero.staminaMax;
       }
-      // area[0].attack(hero);
+      renderHealth();
       hero.armor -= armorBoost;
       renderSkill(moveName);
       renderStamina();
@@ -88,14 +91,13 @@ var item = {
   },
   magicorb: function magicorb() {
     hero.level += 1;
-    hero.healthMax += 15;
+    hero.healthMax += 10;
     hero.health = hero.healthMax;
-    hero.armor += 2;
-    hero.strength += 2;
+    hero.armor += 1;
+    hero.strength += 1;
     hero.stamina += 2;
     hero.exp = 0;
-    hero.nextLv *= 1.5;
-    Math.floor(hero.nextLv);
+    hero.nextLv = Math.floor(hero.nextLv * 1.3);
     renderGetItem(item.magicorb.name, "Level Up!", "Magic Tome");
   },
   vitalitycrystal: function vitalitycrystal() {
@@ -172,14 +174,14 @@ function nextEnemy() {
 function levelUp() {
   if (hero.exp >= hero.nextLv) {
     hero.level += 1;
-    hero.healthMax += 15;
+    hero.healthMax += 10;
     hero.health = hero.healthMax;
     hero.armor += 1;
     hero.strength += 1;
     hero.staminaMax += 2;
     hero.stamina = hero.staminaMax;
-    hero.exp = 0;
-    hero.nextLv *= 1.5;
+    hero.exp -= hero.nextLv;
+    hero.nextLv = Math.floor(hero.nextLv * 1.3);
     renderLevelUp();
   };
   nextEnemy();
@@ -307,7 +309,7 @@ function renderPlayerStats() {
 
 //render a menu when level up
 function renderLevelUp() {
-  var lvUp = ["LEVEL UP!", "level: " + hero.level, "health + 15", "stamina + 2", "armor + 1", "strength + 1", "next lv: " + hero.nextLv]
+  var lvUp = ["LEVEL UP!", "level: " + hero.level, "health + 10", "stamina + 2", "armor + 1", "strength + 1", "next lv: " + hero.nextLv]
   var $newDiv = $('<div>');
   $newDiv.attr("id","playerLvUp");
   $newDiv.appendTo('div#area.background');
