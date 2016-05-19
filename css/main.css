@@ -193,3 +193,7 @@ p {
 #str {
   color: black;
 }
+#retry {
+position:absolute;
+width: auto;
+}

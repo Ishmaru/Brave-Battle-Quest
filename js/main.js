@@ -23,9 +23,9 @@ var hero = {
   health: 100,
   stamina: 20,
   // move handles status changes on hero + enemy in area [0]
-  move: function move(moveName, sCost, sCharge, xDammage, heal, armorBoost) {
+  move: function move(moveName, strength, sCost, sCharge, heal, armorBoost) {
     if (hero.health >= 1 && (sCost <= hero.stamina)) {
-      area[0].health -= getStrength() * xDammage;
+      area[0].health -= strength;
       hero.armor += armorBoost;
       hero.stamina -= sCost;
       hero.stamina += sCharge;
@@ -41,7 +41,7 @@ var hero = {
       renderStamina();
       spellFadein();
       area[0].attack(hero);
-      setTimeout(function(){ hero.armor -= armorBoost;}, 1500);
+      setTimeout(function(){ hero.armor -= armorBoost;}, 1700);
     }
   }
 };
@@ -52,8 +52,8 @@ function deadCheck() {
 }
 
 //function to calculate player dammage
-function getStrength() {
-  var dammage = (Math.floor(Math.random() * hero.strength) + hero.level + hero.strengthMod);
+function getStrength(xDammage) {
+  var dammage = (Math.floor(Math.random() * (hero.strength + xDammage)) + hero.level + xDammage);
   fadeStrength(dammage);
   return dammage;
 };
@@ -195,40 +195,40 @@ function levelUp() {
 //RENDER FUNCTIONS
 //----------------
 
-// (moveName, sCost, sCharge, xDammage, heal, armorBoost)
+// (moveName,strength, sCost, sCharge, heal, armorBoost)
 //Get Input from event listener:
 //Action MENU
 var attack = document.getElementById('attack');
 attack.addEventListener('click', function() {
-    hero.move("attack", 1, 0, 1, 0, 0);
+    hero.move("attack", getStrength(0), 1, 0, 0, 0);
 });
 var defend = document.getElementById('defend');
 defend.addEventListener('click', function() {
-  hero.move("defend", 0, 1, 0, 0, hero.armorMod);
+  hero.move("defend", 0, 0, 1, 0, hero.armorMod);
 });
 var fire = document.getElementById('fire');
 fire.addEventListener('click', function() {
-  hero.move("fire", 5, 0, 2, 0, 0);
+  hero.move("fire", getStrength(2), 5, 0, 0, 0);
 });
 var heal = document.getElementById('heal');
 heal.addEventListener('click', function() {
-  hero.move("heal", 10, 0, 0, 50, 0);
+  hero.move("heal", 0, 10, 0, 50, 0);
 });
 var wait = document.getElementById('wait');
 wait.addEventListener('click', function() {
-  hero.move("wait", 0, 10, 0, 0, 0);
+  hero.move("wait", 0, 0, 10, 0, 0);
 });
 var charge = document.getElementById('charge');
 charge.addEventListener('click', function() {
-  hero.move("charge", 0, 25, 0, 0, -hero.armorMod);
+  hero.move("charge", 0, 0, 25, 0, -hero.armorMod);
 });
 var lightning = document.getElementById('lightning');
 lightning.addEventListener('click', function() {
-  hero.move("lightning", 15, 0, 5, 0, 0);
+  hero.move("lightning", getStrength(5), 15, 0, 0, 0);
 });
 var restore = document.getElementById('restore');
 restore.addEventListener('click', function() {
-  hero.move("restore", 20, 0, 0, 150, 0);
+  hero.move("restore", 0, 20, 0, 150, 0);
 });
 
 //Status Menu
@@ -424,6 +424,7 @@ function fadeDeath() {
   $('#area').fadeOut(4000, function() {
     $('.gameover').fadeIn('fast', function() {
       $('.gameover').text("GAME OVER");
+      tryAgain();
       $('.progress').text("Enemies Defeated: " + hero.enemyDefeated);
     });
   });
@@ -433,6 +434,17 @@ function fadeStrength(dammage) {
   $('#str').text(dammage);
       setTimeout(function(){$('#str').text(" ");}, 600);
 };
+
+function tryAgain() {
+  var $newButton = $('<div>');
+  $newButton.attr("id","retry");
+  $newButton.attr("class","button");
+  $newButton.text('Try Again?');
+  $newButton.appendTo('body');
+  $newButton.click(function() {
+    location.reload();
+  });
+}
 
 //test game:
 nextEnemy();
