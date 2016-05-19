@@ -1,5 +1,5 @@
 // enables/disables player moves
-var input = false;
+var input = true;
 
 //Level modifier for enemies Increases per enemy defeat
 var enemyLV = 0;
@@ -24,24 +24,27 @@ var hero = {
   stamina: 20,
   // move handles status changes on hero + enemy in area [0]
   move: function move(moveName, strength, sCost, sCharge, heal, armorBoost) {
-    if (hero.health >= 1 && (sCost <= hero.stamina)) {
-      area[0].health -= strength;
-      hero.armor += armorBoost;
-      hero.stamina -= sCost;
-      hero.stamina += sCharge;
-      hero.health += heal;
-      if (hero.health > hero.healthMax) {
-        hero.health = hero.healthMax
+    if (input === true) {
+      if (hero.health >= 1 && (sCost <= hero.stamina)) {
+        area[0].health -= strength;
+        hero.armor += armorBoost;
+        hero.stamina -= sCost;
+        hero.stamina += sCharge;
+        hero.health += heal;
+        if (hero.health > hero.healthMax) {
+          hero.health = hero.healthMax
+        }
+        if (hero.stamina > hero.staminaMax) {
+          hero.stamina = hero.staminaMax;
+        }
+        renderHealth();
+        renderSkill(moveName);
+        renderStamina();
+        spellFadein();
+        area[0].attack(hero);
+        setTimeout(function(){ hero.armor -= armorBoost;}, 1700);
+        input = false;
       }
-      if (hero.stamina > hero.staminaMax) {
-        hero.stamina = hero.staminaMax;
-      }
-      renderHealth();
-      renderSkill(moveName);
-      renderStamina();
-      spellFadein();
-      area[0].attack(hero);
-      setTimeout(function(){ hero.armor -= armorBoost;}, 1700);
     }
   }
 };
@@ -53,9 +56,11 @@ function deadCheck() {
 
 //function to calculate player dammage
 function getStrength(xDammage) {
-  var dammage = (Math.floor(Math.random() * (hero.strength + xDammage)) + hero.level + xDammage);
-  fadeStrength(dammage);
-  return dammage;
+  if (input === true) {
+    var dammage = (Math.floor(Math.random() * (hero.strength + xDammage)) + hero.level + xDammage);
+    fadeStrength(dammage);
+    return dammage;
+  }
 };
 
 //calculate enemy dammage
@@ -134,6 +139,7 @@ var Enemy = function Enemy(name, level, health, strength, exp){
 
 //Enemy Prototype attack Function for all Enemies
 Enemy.prototype.attack = function(hero) {
+  renderEHealth();
   if (this.health > 0) {
     setTimeout(function(){
       hero.health -= enemyCalculation(area[0]);
@@ -168,7 +174,7 @@ function nextEnemy() {
   } else if (r >= 0.04) {
       area.push(new Enemy("darkness", (enemyLV), (20 + (enemyLV * 5)), (25 + enemyLV), (20 + enemyLV)));
   } else {
-      area.push(new Enemy("chest", "0", 0.000001, 0, 0));
+      area.push(new Enemy("chest", "0", 1, 0, 0));
   };
 };
 
@@ -198,36 +204,28 @@ function levelUp() {
 // (moveName,strength, sCost, sCharge, heal, armorBoost)
 //Get Input from event listener:
 //Action MENU
-var attack = document.getElementById('attack');
-attack.addEventListener('click', function() {
+$('#attack').click(function(){
     hero.move("attack", getStrength(0), 1, 0, 0, 0);
 });
-var defend = document.getElementById('defend');
-defend.addEventListener('click', function() {
+$('#defend').click(function(){
   hero.move("defend", 0, 0, 1, 0, hero.armorMod);
 });
-var fire = document.getElementById('fire');
-fire.addEventListener('click', function() {
+$('#fire').click(function(){
   hero.move("fire", getStrength(2), 5, 0, 0, 0);
 });
-var heal = document.getElementById('heal');
-heal.addEventListener('click', function() {
+$('#heal').click(function(){
   hero.move("heal", 0, 10, 0, 50, 0);
 });
-var wait = document.getElementById('wait');
-wait.addEventListener('click', function() {
+$('#wait').click(function(){
   hero.move("wait", 0, 0, 10, 0, 0);
 });
-var charge = document.getElementById('charge');
-charge.addEventListener('click', function() {
+$('#charge').click(function(){
   hero.move("charge", 0, 0, 25, 0, -hero.armorMod);
 });
-var lightning = document.getElementById('lightning');
-lightning.addEventListener('click', function() {
+$('#lightning').click(function(){
   hero.move("lightning", getStrength(5), 15, 0, 0, 0);
 });
-var restore = document.getElementById('restore');
-restore.addEventListener('click', function() {
+$('#restore').click(function(){
   hero.move("restore", 0, 20, 0, 150, 0);
 });
 
@@ -254,6 +252,7 @@ function renderEnemy() {
   $('#enemy').fadeIn('fast', function() {
   });
   enemyAvatar.style.backgroundImage = getAvatarBgImg();
+  renderEHealth();
 };
 function getAvatarBgImg() {
   if (area[0].name === "stalion") return "url('art/stalion1.png')";
@@ -270,6 +269,9 @@ function renderSkill(skill) {
   enemydammage.style.backgroundImage = 'url("art/' + skill + '.png")';
 };
 
+function renderEHealth() {
+  $('#eHealth').text("Health: " + area[0].health);
+};
 
 // _____________
 //POP up Menus
@@ -278,14 +280,12 @@ function renderSkill(skill) {
 // OPEN MENUS VIA CLICK
 
 //Add event listener to run renderPlayerStats
-var getStats = document.getElementById('statusMenu');
-getStats.addEventListener('click', function(){
+$('#statusMenu').click(function(){
   renderPlayerStats();
 });
 
 //Add event listener to run renderEnemyStats
-var getEStats = document.getElementById('enemy');
-getEStats.addEventListener('click', function(){
+$('#enemy').click(function(){
   renderEnemyStats();
 });
 
@@ -303,8 +303,7 @@ function renderPlayerStats() {
     $newLI.text([Object.keys(hero)[i + 0]] + ": " + hero[Object.keys(hero)[i + 0]]);
   }
   // make the created menu clickable to remove it
-  var playerStats = document.getElementById('player');
-  playerStats.addEventListener('click', function() {
+  $('#player').click(function(){
     $('#player').remove();
   });
 };
@@ -324,8 +323,7 @@ function renderLevelUp() {
     $newLI.text(lvUp[i]);
   }
   // make the created menu clickable to remove it
-  var close = document.getElementById('playerLvUp');
-  close.addEventListener('click', function() {
+  $('#playerLvUp').click(function(){
     $('#playerLvUp').remove();
   });
   renderHealth();
@@ -346,12 +344,11 @@ function renderEnemyStats() {
     $newLI.text([Object.keys(area[0])[i + 0]] + ": " + area[0][Object.keys(area[0])[i + 0]]);
   };
   // make the created menu clickable to remove it
-  var enemysStats = document.getElementById('enemyStat');
-  enemysStats.addEventListener('click', function() {
+  $('#enemyStat').click(function(){
     $('#enemyStat').remove();
   });
   // $newDiv.background.url = getAvatarBgImg();
-  enemysStats.style.backgroundImage = getAvatarBgImg();
+  $('#enemyStat').css("background-image", getAvatarBgImg());
 };
 
 //render a menu when item collect
@@ -371,12 +368,11 @@ function renderGetItem(itemR, itemB, itemN) {
   $newLI.text(itemB);
   $newLI.appendTo($newUL);
   // make the created menu clickable to remove it
-  var itemGet = document.getElementById('event');
-  itemGet.addEventListener('click', function() {
+  $('#event').click(function(){
     $('#event').remove();
   });
   // Render item:
-  itemGet.style.backgroundImage = 'url("art/' + itemR + '.png")';
+  $('#event').css("background-image", 'url("art/' + itemR + '.png")');
 };
 
 //__________
@@ -387,20 +383,16 @@ function enemyDie() {
   $("#enemy").fadeOut(2000, function() {
     levelUp();
     renderEnemy();
+    input = true;
   }
 )};
-// function attackedFade(dammage) {
-//   $('#dmg').text("Dammage");
-//   $('#dammageTaken').fadeIn('fast', function() {
-//     $('#dammageTaken').fadeOut('fast')
-//   })
-// };
 
 function attackedFade(dammage) {
   $('#dmg').text("Dammage");
   $('#dammageTaken').fadeIn('fast', function() {
     $('#dammageTaken').fadeOut('fast', function() {
       $('#dmg').text(" ");
+      input = true;
     })
   })
 };
@@ -408,11 +400,13 @@ function spellFadeOut() {
   $('<p>')
   $('#dammage').fadeOut('slow', function() {
     enemydammage.style.backgroundImage = 'url("art/undefined.png")';
+    // renderEHealth();
   });
 };
 function spellFadein() {
     $('#dammage').fadeIn('fast', function(){
       spellFadeOut();
+      // renderEHealth();
     } );
 };
 
@@ -428,7 +422,7 @@ function fadeDeath() {
       $('.progress').text("Enemies Defeated: " + hero.enemyDefeated);
     });
   });
-}
+};
 
 function fadeStrength(dammage) {
   $('#str').text(dammage);

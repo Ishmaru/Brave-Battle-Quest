@@ -6,7 +6,6 @@ body {
 }
 
 .background, .dead {
-  /*display: inline-block;*/
   background: url("../art/area2.jpg");
   width: 1050px;
   height: 650px;
@@ -23,6 +22,7 @@ body {
 
 #dammageTaken {
   position: absolute;
+  top: 60px;
   background: url("../art/enemyattack.png");
   width: 1050px;
   height: 650px;
@@ -135,7 +135,7 @@ margin-top: 450px;
   margin:15px 30px 15px 15px;
 }
 
-#dammage, #player, #playerLvUp, #event, #enemyStat {
+#dammage, #player, #playerLvUp, #event, #enemyStat, span {
   font-size: 38px;
   padding-top: 5px;
 }
@@ -196,4 +196,11 @@ p {
 #retry {
 position:absolute;
 width: auto;
+}
+
+span {
+  position: relative;
+  left: -500px;
+  top: 600px;
+  display: inline;
 }
