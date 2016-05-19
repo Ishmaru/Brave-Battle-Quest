@@ -177,3 +177,19 @@ margin-top: 450px;
   background-color: red;
   background: url("../art/enemyattack.png");
 }
+
+.number {
+  position: absolute;
+  margin: 150px auto;
+  width: 1000px;
+}
+
+p {
+  font-size: 100px;
+  color: red;
+  text-align: center;
+}
+
+#str {
+  color: black;
+}

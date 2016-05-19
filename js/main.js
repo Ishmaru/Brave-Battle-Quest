@@ -37,11 +37,11 @@ var hero = {
         hero.stamina = hero.staminaMax;
       }
       renderHealth();
-      hero.armor -= armorBoost;
       renderSkill(moveName);
       renderStamina();
       spellFadein();
       area[0].attack(hero);
+      setTimeout(function(){ hero.armor -= armorBoost;}, 1500);
     }
   }
 };
@@ -54,6 +54,7 @@ function deadCheck() {
 //function to calculate player dammage
 function getStrength() {
   var dammage = (Math.floor(Math.random() * hero.strength) + hero.level + hero.strengthMod);
+  fadeStrength(dammage);
   return dammage;
 };
 
@@ -123,8 +124,9 @@ function getItem() {
 };
 
 //Enemy Consructor Function
-var Enemy = function Enemy(name, health, strength, exp){
+var Enemy = function Enemy(name, level, health, strength, exp){
   this.name = name;
+  this.level = level;
   this.health = health;
   this.strength = strength;
   this.exp = exp;
@@ -154,19 +156,19 @@ Enemy.prototype.attack = function(hero) {
 function nextEnemy() {
   var r = Math.random();
   if (r >= 0.84) {
-      area.push(new Enemy("whyvern", (10 + (enemyLV * 5)), (25 + enemyLV), (15 + enemyLV)));
+      area.push(new Enemy("whyvern", (enemyLV), (10 + (enemyLV * 5)), (25 + enemyLV), (15 + enemyLV)));
   } else if (r >= 0.68) {
-      area.push(new Enemy("goul", (15 + (enemyLV * 5)), (10 + enemyLV), (10 + enemyLV)));
+      area.push(new Enemy("goul", (enemyLV), (15 + (enemyLV * 5)), (10 + enemyLV), (10 + enemyLV)));
   } else if (r >= 0.52) {
-      area.push(new Enemy("skywhale", (30 + (enemyLV * 10)), (5 + enemyLV), (30 + enemyLV)));
+      area.push(new Enemy("skywhale", (enemyLV), (30 + (enemyLV * 10)), (5 + enemyLV), (30 + enemyLV)));
   } else if (r >= 0.36) {
-      area.push(new Enemy("wasp", (5 + (enemyLV * 2)), (2 + enemyLV), (5 + enemyLV)));
+      area.push(new Enemy("wasp", (enemyLV), (5 + (enemyLV * 2)), (2 + enemyLV), (5 + enemyLV)));
   } else if (r >= 0.2) {
-      area.push(new Enemy("stalion", (15 + (enemyLV * 5)), (20 + enemyLV), (40 + enemyLV)));
+      area.push(new Enemy("stalion", (enemyLV), (15 + (enemyLV * 5)), (20 + enemyLV), (40 + enemyLV)));
   } else if (r >= 0.04) {
-      area.push(new Enemy("darkness", (20 + (enemyLV * 5)), (25 + enemyLV), (20 + enemyLV)));
+      area.push(new Enemy("darkness", (enemyLV), (20 + (enemyLV * 5)), (25 + enemyLV), (20 + enemyLV)));
   } else {
-      area.push(new Enemy("chest", 0.000001, 0, 0));
+      area.push(new Enemy("chest", "0", 0.000001, 0, 0));
   };
 };
 
@@ -338,7 +340,7 @@ function renderEnemyStats() {
   var $newUL = $('<ul>');
   $newUL.appendTo($newDiv);
 // Render all major stats of the Enemy object inside area array
-  for (var i = 0; i < 4; i++) {
+  for (var i = 0; i < 5; i++) {
     var $newLI = $('<li>');
     $newLI.appendTo($newUL);
     $newLI.text([Object.keys(area[0])[i + 0]] + ": " + area[0][Object.keys(area[0])[i + 0]]);
@@ -387,12 +389,23 @@ function enemyDie() {
     renderEnemy();
   }
 )};
-function attackedFade() {
+// function attackedFade(dammage) {
+//   $('#dmg').text("Dammage");
+//   $('#dammageTaken').fadeIn('fast', function() {
+//     $('#dammageTaken').fadeOut('fast')
+//   })
+// };
+
+function attackedFade(dammage) {
+  $('#dmg').text("Dammage");
   $('#dammageTaken').fadeIn('fast', function() {
-    $('#dammageTaken').fadeOut('fast')
+    $('#dammageTaken').fadeOut('fast', function() {
+      $('#dmg').text(" ");
+    })
   })
 };
 function spellFadeOut() {
+  $('<p>')
   $('#dammage').fadeOut('slow', function() {
     enemydammage.style.backgroundImage = 'url("art/undefined.png")';
   });
@@ -409,8 +422,17 @@ function fadeDeath() {
   $('.status').remove();
   $('#area').attr("class","dead");
   $('#area').fadeOut(4000, function() {
+    $('.gameover').fadeIn('fast', function() {
+      $('.gameover').text("GAME OVER");
+      $('.progress').text("Enemies Defeated: " + hero.enemyDefeated);
+    });
   });
 }
+
+function fadeStrength(dammage) {
+  $('#str').text(dammage);
+      setTimeout(function(){$('#str').text(" ");}, 600);
+};
 
 //test game:
 nextEnemy();
@@ -418,3 +440,4 @@ nextEnemy();
 renderEnemy();
 // spellFadeOut();
 $('#dammageTaken').fadeOut(0);
+$('.gameover').fadeOut(0);
