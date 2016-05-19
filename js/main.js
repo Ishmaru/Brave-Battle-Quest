@@ -211,7 +211,7 @@ $('#defend').click(function(){
   hero.move("defend", 0, 0, 1, 0, hero.armorMod);
 });
 $('#fire').click(function(){
-  hero.move("fire", getStrength(2), 5, 0, 0, 0);
+  hero.move("fire", getStrength(5), 5, 0, 0, 0);
 });
 $('#heal').click(function(){
   hero.move("heal", 0, 10, 0, 50, 0);
@@ -223,7 +223,7 @@ $('#charge').click(function(){
   hero.move("charge", 0, 0, 25, 0, -hero.armorMod);
 });
 $('#lightning').click(function(){
-  hero.move("lightning", getStrength(5), 15, 0, 0, 0);
+  hero.move("lightning", getStrength(10), 15, 0, 0, 0);
 });
 $('#restore').click(function(){
   hero.move("restore", 0, 20, 0, 150, 0);
@@ -445,5 +445,5 @@ nextEnemy();
 // renderSkill();
 renderEnemy();
 // spellFadeOut();
-$('#dammageTaken').fadeOut(0);
+$('#dammageTaken').fadeOut(0).addClass('dammageTaken');
 $('.gameover').fadeOut(0);

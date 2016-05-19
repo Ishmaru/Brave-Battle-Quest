@@ -23,11 +23,13 @@ body {
 #dammageTaken {
   position: absolute;
   top: 60px;
-  background: url("../art/enemyattack.png");
   width: 1050px;
   height: 650px;
   background-repeat: no-repeat;
   background-size: 1050px;
+}
+.dammageTaken {
+  background: url("../art/enemyattack.png");
 }
 
 #player, #playerLvUp, #event, #enemyStat {
@@ -193,9 +195,11 @@ p {
 #str {
   color: black;
 }
+
 #retry {
-position:absolute;
-width: auto;
+position:relative;
+display: block;
+margin-right: 42%;
 }
 
 span {
