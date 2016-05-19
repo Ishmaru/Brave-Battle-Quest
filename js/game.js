@@ -98,5 +98,3 @@ function levelUp() {
   renderEnemy();
 };
 
-//Invoke gameInit
-gameInit();

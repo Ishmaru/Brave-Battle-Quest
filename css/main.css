@@ -6,6 +6,7 @@ body {
 }
 
 .background, .dead {
+  display: block;
   background: url("../art/area2.jpg");
   width: 1050px;
   height: 650px;
@@ -207,4 +208,27 @@ span {
   left: -500px;
   top: 600px;
   display: inline;
+}
+
+.noDisplay {
+  display: none;
+}
+
+.splashHero {
+  display: inline:block;
+  width: 650px;
+  height: 670px;
+  float: center;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: -20px;
+  background: url("../art/hero.png");
+  background-position: 20px;
+  background-repeat: no-repeat;
+  border-radius: 40%;
+}
+.start {
+  position: absolute;
+  left: 43%;
+  top: 70%;
 }

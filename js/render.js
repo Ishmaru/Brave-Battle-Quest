@@ -2,6 +2,12 @@
 //RENDER FUNCTIONS
 //----------------
 
+//Init render board from splash
+function renderGame() {
+  $('#area').addClass('background').removeClass('noDisplay');
+  $('#splashPg').addClass('noDisplay').removeClass('background');
+};
+
 // (moveName,strength, sCost, sCharge, heal, armorBoost)
 //Get Input from event listener:
 //Action MENU
@@ -202,3 +208,8 @@ function tryAgain() {
     location.reload();
   });
 }
+
+$('#start').click(function() {
+  renderGame();
+  gameInit();
+});
