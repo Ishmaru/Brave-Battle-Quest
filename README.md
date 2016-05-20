@@ -114,6 +114,12 @@ The game is rather simple in concept, The player performs a function which alter
 
 On that note the visuals was by far the most problematic. My idea was to incorperate fades as a basic animation to use for attack effects, and enemy effects. Meaning when the data will be processed became a major point in the developement. The use of callbacks were important, but sometimes even that still did not give the desired effect. For example the Defense ability needs to raise the player's armor by its armor mod before the enemy attacks, but then needs to revert back after enemy attack is over, but before the player sets his next input, and definatly before the render of the player stats. For this case I used a timeout function.
 
+###Retrospective:
+I wish i could have more time to redesign the fading to be done via Animate CSS rather than jQuery, this will save tons of code trying to work around the fact that fadedOut elements become display none. With animations i would have to make sure element was at least starting to fade back in before changing the image, editing the div text, or doing anything with the children.
+
+Also I chose to create pop up menus via creating the element in JS. between all 4 popups, added a masive chunk of code creating elements, setting attributes, and appending them to their correct parent. This could have easily avoided by pre-defining them in the html and using a class with the display property none.
+
+
 ## Developed in:
 HTML
 
