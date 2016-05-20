@@ -1,7 +1,7 @@
 #Brave Battle Arena
 ####Javascript RPG
 -
-![Screenshoot](art/bbascreen.png)
+![Screenshot](art/bbascreen.png)
 
 ##Story
 Assume the role of Akari, a powerful sorceress, as she tackles the trials of the Dark Labyrinth in hopes of fame and riches.
@@ -105,11 +105,9 @@ Javascript
 
 CSS
 
-<<<<<<< HEAD
 ####Additional Libaries:
 =======
 ####Additional Libraries:
->>>>>>> 721291fc1e8a5d11241aebef6dba280ef38d5731
 jQuery
 
 Animate CSS
@@ -126,8 +124,5 @@ Various sounds are from Open Game Art [http://opengameart.org]
 ###Special Thanks:
 General Assembly
 
-<<<<<<< HEAD
 Everyone form Class: Wdi-Down Town LA 10!
-=======
-Everyone form Class: Wdi-Down Town LA 10!
->>>>>>> 721291fc1e8a5d11241aebef6dba280ef38d5731
+
