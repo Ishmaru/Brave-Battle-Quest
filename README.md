@@ -3,6 +3,9 @@
 -
 ![Screenshot](art/bbascreen1.png)
 
+#Play HERE:
+http://ishmaru.github.io/Brave-Battle-Quest/
+
 ##Story
 Assume the role of Akari, a powerful sorceress, as she tackles the trials of the Dark Labyrinth in hopes of fame and riches.
 
@@ -103,6 +106,8 @@ MAGIC TOME: Free Level Up
 
 
 #Development
+####Game Status: https://trello.com/b/8BycSWC4/rpg-battle-arena
+
 I was inspired by classic Japanese Role Playing Games, (Final Fantasy, Pokemon, Kyle's Quest) which have a distinct combat systems that involve selecting a command from a list to perform during their turn. 
 
 With that in mind I experimented with creating object keys for stats and keys with "commands" to affect other objects, then logging the result. Along with that console logging some dialogue and with that having a bare bones console version of Brave Battle Arena.
