@@ -50,6 +50,7 @@ RESTORE: (Stamina Cost = 25) Heals all health
 
 ##Level UP!
 You level up when your Exp is greater than your Next Level Stat.
+
 ####Stats Increased:
 HEALTH + 15
 
@@ -101,6 +102,18 @@ LUCK CHARM: Lower Enemy LV
 
 MAGIC TOME: Free Level Up
 
+
+#Developement
+I was inspired by classic Japaneese Role Playing Games, (Final Fantasy, Pokemon, Kyle's Quest) which have a distinct combat systems that involve selecting a command from a list to perform during their turn. 
+
+With that in mind I experamented with creating object keys for stats and keys with "commands" to affect other objects, then logging the result. Along with that console loging some dialogue and with that having a bare bones console version of Brave Battle Arena.
+
+With the game play, I wanted a combat system that forces the player to plan their move ahead instead of spamming attack and relying on random generation. With that in mind I used stamina as a means to limit player input. Most skills require stamina to perform, otherwise the move cannot be done, and the player needs to use their turn to recharge their stamina rather than attack. In the final product there are 3 moves that do this, whith each having different effects. The timing of when to use these is vital. 
+
+The game is rather simple in concept, The player performs a function which alters enemy stats then the enemy performs a function in response. The effects depend on the function given. However what became apparent was the emmense size of the variables involved. A huge part was keeping data clean, and trying to find efficient means to code. I reduced all player functions to one master move function, doing dammage calculations on a separate function and, using jQuery to handle event listeners. This all helped reduce the number of lines. However, Due to the large amount of data needed to be checked and updated the game was still well over 400 lines of code. My final solution was to separate game into 3 separate js files, one for the games model(data), one for the state(the game itself), and one final for the render(visuals/audio).
+
+On that note the visuals was by far the most problematic. My idea was to incorperate fades as a basic animation to use for attack effects, and enemy effects. Meaning when the data will be processed became a major point in the developement. The use of callbacks were important, but sometimes even that still did not give the desired effect. For example the Defense ability needs to raise the player's armor by its armor mod before the enemy attacks, but then needs to revert back after enemy attack is over, but before the player sets his next input, and definatly before the render of the player stats. For this case I used a timeout function.
+
 ## Developed in:
 HTML
 
@@ -108,12 +121,13 @@ Javascript
 
 CSS
 
-####Additional Libaries:
-=======
 ####Additional Libraries:
 jQuery
 
 Animate CSS
+
+##Design:
+
 
 ##Credits:
 Programing: Adrian (Ishmaru)
