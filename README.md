@@ -1,4 +1,5 @@
 #Brave Battle Arena
+![Title](art/bba.png)
 ####Javascript RPG
 -
 ![Screenshot](art/bbascreen1.png)
@@ -24,6 +25,8 @@ ARMOR MOD: Additional Armor when you use Defend Skill
 EXP: Your current level of experence, awarded by defeating enemies.
 
 NEXT LV: Amount of EXP needed to level up.
+
+![Screenshot](art/bbascreen2.png)
 
 ##Your Skills:
 ###Offensive:
