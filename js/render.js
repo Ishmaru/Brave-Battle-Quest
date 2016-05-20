@@ -169,7 +169,7 @@ function enemyDie() {
 function attackedFade(dammage) {
   $("#hurt")[0].play();
   $('#area').addClass('animated bounce');
-  $('#dmg').text("Dammage");
+  $('#dmg').text("Damage");
   $('#dammageTaken').fadeIn('fast', function() {
     $('#dammageTaken').fadeOut('fast', function() {
       $('#dmg').text(" ");
