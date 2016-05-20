@@ -27,7 +27,7 @@ $('#wait').click(function() {
   hero.move("wait", 0, 0, 10, 0, 0, false, "#waitd");
 });
 $('#charge').click(function() {
-  hero.move("charge", 0, 0, hero.staminaMax, 0, -hero.armorMod, false, "#heald");
+  hero.move("charge", 0, 0, hero.staminaMax, 0, -(hero.armorMod * 2), false, "#heald");
 });
 $('#lightning').click(function() {
   hero.move("lightning", getStrength(10), 15, 0, 0, 0, true, "#windd");
