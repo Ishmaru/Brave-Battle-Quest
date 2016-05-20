@@ -1,5 +1,6 @@
 #Brave Battle Arena
--
+
+![screenshoot](art/bbascreen1.png)
 
 ##Story
 Assume the role of Akari, a powerful sorceress, as she tackles the trials of the Dark Labyrinth in hopes of fame and riches.
