@@ -27,20 +27,17 @@ var hero = {
   health: 100,
   stamina: 20,
   // move handles status changes on hero + enemy in area [0]
-  move: function move(moveName, strength, sCost, sCharge, heal, armorBoost) {
+  move: function move(moveName, strength, sCost, sCharge, heal, armorBoost, shake) {
     if (input === true) {
       if (hero.health >= 1 && (sCost <= hero.stamina)) {
+        if (shake === true) {enemyShake(hero.stamina, sCost);}
         area[0].health -= strength;
         hero.armor += armorBoost;
         hero.stamina -= sCost;
         hero.stamina += sCharge;
         hero.health += heal;
-        if (hero.health > hero.healthMax) {
-          hero.health = hero.healthMax
-        }
-        if (hero.stamina > hero.staminaMax) {
-          hero.stamina = hero.staminaMax;
-        }
+        if (hero.health > hero.healthMax) {hero.health = hero.healthMax}
+        if (hero.stamina > hero.staminaMax) {hero.stamina = hero.staminaMax;}
         renderHealth();
         renderSkill(moveName);
         renderStamina();

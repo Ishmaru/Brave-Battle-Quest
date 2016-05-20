@@ -12,29 +12,37 @@ function renderGame() {
 //Get Input from event listener:
 //Action MENU
 $('#attack').click(function() {
-    hero.move("attack", getStrength(0), 1, 0, 0, 0);
+  hero.move("attack", getStrength(0), 1, 0, 0, 0, true);
+    // document.querySelector("#fire").play();
 });
 $('#defend').click(function() {
-  hero.move("defend", 0, 0, 1, 0, hero.armorMod);
+  hero.move("defend", 0, 0, 1, 0, hero.armorMod, false);
 });
 $('#fire').click(function() {
-  hero.move("fire", getStrength(5), 5, 0, 0, 0);
+  hero.move("fire", getStrength(5), 5, 0, 0, 0, true);
 });
 $('#heal').click(function() {
-  hero.move("heal", 0, 10, 0, 50, 0);
+  hero.move("heal", 0, 10, 0, 50, 0, false);
 });
 $('#wait').click(function() {
-  hero.move("wait", 0, 0, 10, 0, 0);
+  hero.move("wait", 0, 0, 10, 0, 0, false);
 });
 $('#charge').click(function() {
-  hero.move("charge", 0, 0, 25, 0, -hero.armorMod);
+  hero.move("charge", 0, 0, 25, 0, -hero.armorMod, false);
 });
 $('#lightning').click(function() {
-  hero.move("lightning", getStrength(10), 15, 0, 0, 0);
+  hero.move("lightning", getStrength(10), 15, 0, 0, 0, true);
 });
 $('#restore').click(function() {
-  hero.move("restore", 0, 20, 0, 150, 0);
+  hero.move("restore", 0, 20, 0, 150, 0, false);
 });
+
+// render enemy shake if attack is possible
+function enemyShake(stamina, staminaCost) {
+  if (stamina >= staminaCost) {
+    $('#enemy').addClass('animated shake');
+  }
+};
 
 //Status Menu
 var ststusMenu = document.getElementById('ststusMenu');
@@ -155,10 +163,12 @@ function enemyDie() {
 )};
 
 function attackedFade(dammage) {
+  $('#area').addClass('animated bounce');
   $('#dmg').text("Dammage");
   $('#dammageTaken').fadeIn('fast', function() {
     $('#dammageTaken').fadeOut('fast', function() {
       $('#dmg').text(" ");
+      $('#area').removeClass('animated bounce');
       input = true;
     })
   })
@@ -168,19 +178,14 @@ function spellFadeOut() {
   $('<p>')
   $('#dammage').fadeOut('slow', function() {
     enemydammage.style.backgroundImage = 'url("art/undefined.png")';
-    // renderEHealth();
+    $('#enemy').removeClass('animated infinite shake');
   });
 };
 
 function spellFadein() {
-    $('#dammage').fadeIn('fast', function(){
-      spellFadeOut();
-      // renderEHealth();
-    } );
-};
+    $('#dammage').fadeIn('fast', function(){spellFadeOut()})};
 
 function fadeDeath() {
-  // $('#area').style.backgroundImage = 'url("art/enemyattack.png")';
   $('.button').remove();
   $('.status').remove();
   $('#area').attr("class","dead");
@@ -205,10 +210,10 @@ function tryAgain() {
   $newButton.text('Try Again?');
   $newButton.appendTo('body');
   $newButton.click(function() {
-    location.reload();
+  location.reload();
   });
 }
-
+//Click to start!
 $('#start').click(function() {
   renderGame();
   gameInit();

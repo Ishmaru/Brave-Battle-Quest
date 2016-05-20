@@ -223,7 +223,7 @@ span {
   margin-right: auto;
   margin-top: -20px;
   background: url("../art/hero.png");
-  background-position: 20px;
+  background-position: 0px 150px;
   background-repeat: no-repeat;
   border-radius: 40%;
 }
@@ -231,4 +231,12 @@ span {
   position: absolute;
   left: 43%;
   top: 70%;
+}
+.bbaTitle {
+  position: absolute;
+  left: -155%;
+  top: -500%;
+  width: 900px;
+  height: 250px;
+  background: url("../art/bba.png");
 }

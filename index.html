@@ -3,12 +3,14 @@
 <head>
   <meta charset="UTF-8">
   <title>Brave Battle Quest</title>
+  <link rel="stylesheet" href="css/animate.css">
   <link rel="stylesheet" href="css/main.css">
 </head>
 <body>
 <div class="background" id="splashPg">
   <div class="splashHero">
     <div class="start">
+    <div class="bbaTitle"> </div>
       <div class="button" id="start">Start Battle!</div>
     </div>
   </div>
@@ -63,8 +65,13 @@
   <p class="progress"> </p>
 </div>
 
+  <audio id="fire" src="audio/fire.ogg"></audio>
+  <audio id="heal" src="audio/heal.wav"></audio>
+  <audio id="misc" src="audio/misc.wav"></audio>
+  <audio id="wind" src="audio/wind.wav"></audio>
+  <audio id="ice" src="audio/ice.wav"></audio>
+
   <script src="https://code.jquery.com/jquery-2.2.3.min.js"></script>
-  <!-- <script src="./js/main.js"></script> -->
   <script src="./js/model.js"></script>
   <script src="./js/render.js"></script>
   <script src="./js/game.js"></script>
