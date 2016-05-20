@@ -23,7 +23,7 @@ body {
 
 #dammageTaken {
   position: absolute;
-  top: 60px;
+  top: 5px;
   width: 1050px;
   height: 650px;
   background-repeat: no-repeat;
@@ -152,7 +152,7 @@ margin-top: 450px;
 }
 
 .status {
-  margin:2px 30px 15px 15px;
+  margin:-27px 30px 15px 15px;
   float: right;
   width: 450px;
   height: 150px;
@@ -183,8 +183,12 @@ margin-top: 450px;
 
 .number {
   position: absolute;
-  margin: 150px auto;
+  display: inline-block;
+  float: center;
+/*  margin: 150px auto;*/
   width: 1000px;
+  left: 0px;
+  top: 200px;
 }
 
 p {

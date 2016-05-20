@@ -27,22 +27,28 @@ var hero = {
   health: 100,
   stamina: 20,
   // move handles status changes on hero + enemy in area [0]
-  move: function move(moveName, strength, sCost, sCharge, heal, armorBoost, shake) {
+  move: function move(moveName, strength, sCost, sCharge, heal, armorBoost, shake, soundId) {
     if (input === true) {
       if (hero.health >= 1 && (sCost <= hero.stamina)) {
+        // check to see if the move creates a shake effect
         if (shake === true) {enemyShake(hero.stamina, sCost);}
+        //modify stats of player and enemy
         area[0].health -= strength;
         hero.armor += armorBoost;
         hero.stamina -= sCost;
         hero.stamina += sCharge;
         hero.health += heal;
+        //before rendering check to see if health and stamina are above max values, and fix
         if (hero.health > hero.healthMax) {hero.health = hero.healthMax}
         if (hero.stamina > hero.staminaMax) {hero.stamina = hero.staminaMax;}
+        //render sounds, stats, trigger fades, and start enemy atack
+        playMoveSound(soundId);
         renderHealth();
         renderSkill(moveName);
         renderStamina();
         spellFadein();
         area[0].attack(hero);
+        //set a timeout callback to revert armor stat to a non boosted state AFTER enemy attacks
         setTimeout(function(){ hero.armor -= armorBoost;}, 1700);
         input = false;
       }

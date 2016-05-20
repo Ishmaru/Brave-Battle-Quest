@@ -7,75 +7,69 @@
   <link rel="stylesheet" href="css/main.css">
 </head>
 <body>
+<!-- Splash page, hides when game begins -->
 <div class="background" id="splashPg">
   <div class="splashHero">
     <div class="start">
-    <div class="bbaTitle"> </div>
-      <div class="button" id="start">Start Battle!</div>
+    <div class="bbaTitle animated infinite pulse"> </div>
+      <div class="button animated zoomIn" id="start">Start Battle!</div>
     </div>
   </div>
 </div>
+<!-- gameboard -->
 <div class="noDisplay" id="area">
   <span id="eHealth">health</span>
+  <!-- bloodFX when enemy attacks -->
   <div id="dammageTaken"></div>
     <div class="number">
       <p id="dmg"> </p>
     </div>
+    <!-- enemy Avatar, commandFX, and dammage indicator -->
   <div id="enemy">
     <div id="dammage">
       <p id="str"> </p>
     </div>
   </div>
+  <!-- Player Vital Stats on top right -->
   <div class="status" id="statusMenu">
     <div class="indicator">
       <div id="health">Health: 100</div>
       <div id="stamina">Stamina: 20</div>
     </div>
   </div>
+  <!-- List of commands -->
   <div class="menubox">
-    <div class="button" id="attack">
-    Attack
-    </div>
-    <div class="button" id="defend">
-    Defend
-    </div>
-    <div class="button" id="fire">
-    Fire
-    </div>
-    <div class="button" id="heal">
-    Heal
-    </div>
-    <div class="button" id="wait">
-    Wait
-    </div>
-    <div class="button" id="charge">
-    Charge
-    </div>
-    <div class="button" id="restore">
-    Restore
-    </div>
-    <div class="button" id="lightning">
-    Lightning
-    </div>
+    <div class="button" id="attack">Attack</div>
+    <div class="button" id="defend">Defend</div>
+    <div class="button" id="fire">Fire</div>
+    <div class="button" id="heal">Heal</div>
+    <div class="button" id="wait">Wait</div>
+    <div class="button" id="charge">Charge</div>
+    <div class="button" id="restore">Restore</div>
+    <div class="button" id="lightning">Lightning</div>
   </div>
-
 </div>
+<!-- Game Over Screen -->
 <div class="final">
   <p class="gameover"> </p>
   <p class="progress"> </p>
 </div>
-
-  <audio id="fire" src="audio/fire.ogg"></audio>
-  <audio id="heal" src="audio/heal.wav"></audio>
-  <audio id="misc" src="audio/misc.wav"></audio>
-  <audio id="wind" src="audio/wind.wav"></audio>
-  <audio id="ice" src="audio/ice.wav"></audio>
-
-  <script src="https://code.jquery.com/jquery-2.2.3.min.js"></script>
-  <script src="./js/model.js"></script>
-  <script src="./js/render.js"></script>
-  <script src="./js/game.js"></script>
+<!-- sounds -->
+<audio id="music" src="audio/battlethemea.ogg" preload="auto"></audio>
+<audio id="lvu" src="audio/levelup.wav"></audio>
+<audio id="hurt" src="audio/hurt.ogg"></audio>
+<audio id="die0" src="audio/die0.wav"></audio>
+<audio id="fired" src="audio/fire.ogg"></audio>
+<audio id="heald" src="audio/heal.ogg"></audio>
+<audio id="miscd" src="audio/misc.ogg"></audio>
+<audio id="windd" src="audio/lightning.ogg"></audio>
+<audio id="iced" src="audio/ice.ogg"></audio>
+<audio id="waitd" src="audio/wait.ogg"></audio>
+<audio id="dead" src="audio/gameover.ogg"></audio>
+<!-- scripts -->
+<script src="https://code.jquery.com/jquery-2.2.3.min.js"></script>
+<script src="./js/model.js"></script>
+<script src="./js/render.js"></script>
+<script src="./js/game.js"></script>
 </body>
 </html>
-
-

@@ -16,7 +16,7 @@ function gameInit() {
 //Check to see if you have died
 function deadCheck() {
   if (hero.health <= 0) fadeDeath();
-}
+};
 
 //function to calculate player dammage
 function getStrength(xDammage) {
@@ -57,6 +57,7 @@ Enemy.prototype.attack = function(hero) {
       hero.stamina += 1;
       enemyDie();
       if (this.name === "chest") getItem();
+      $("#die0")[0].play();
   };
 };
 
@@ -67,13 +68,13 @@ function nextEnemy() {
       area.push(new Enemy("whyvern", (enemyLV), (10 + (enemyLV * 5)), (25 + enemyLV), (15 + enemyLV)));
   } else if (r >= 0.68) {
       area.push(new Enemy("goul", (enemyLV), (15 + (enemyLV * 5)), (10 + enemyLV), (10 + enemyLV)));
-  } else if (r >= 0.52) {
+  } else if (r >= 0.55) {
       area.push(new Enemy("skywhale", (enemyLV), (30 + (enemyLV * 10)), (5 + enemyLV), (30 + enemyLV)));
-  } else if (r >= 0.36) {
+  } else if (r >= 0.45) {
       area.push(new Enemy("wasp", (enemyLV), (5 + (enemyLV * 2)), (2 + enemyLV), (5 + enemyLV)));
-  } else if (r >= 0.2) {
+  } else if (r >= 0.3) {
       area.push(new Enemy("stalion", (enemyLV), (15 + (enemyLV * 5)), (20 + enemyLV), (40 + enemyLV)));
-  } else if (r >= 0.04) {
+  } else if (r >= 0.1) {
       area.push(new Enemy("darkness", (enemyLV), (20 + (enemyLV * 5)), (25 + enemyLV), (20 + enemyLV)));
   } else {
       area.push(new Enemy("chest", "0", 1, 0, 0));
