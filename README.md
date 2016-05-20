@@ -1,4 +1,3 @@
-#Brave Battle Arena
 ![Title](art/bba.png)
 ####Javascript RPG
 -
@@ -155,3 +154,7 @@ Ezra Raez
 
 Everyone form Class: Wdi-Down Town LA 10!
 
+####Family
+JP Candelier
+Sue Li
+Marina Delpha
