@@ -110,7 +110,6 @@ margin-top: 450px;
   margin:20px 10px;
   font-size: 20px;
   padding-top: 12px;
-  z-index: 9;
 }
 
 .button:hover, #event:hover, #player:hover, #playerLvUp:hover, #enemyStat:hover, #enemy:hover, .status:hover {
