@@ -7,7 +7,11 @@ function renderGame() {
   $('#area').addClass('background').removeClass('noDisplay');
   $('#splashPg').addClass('noDisplay').removeClass('background');
 };
-
+// Renders splash once loading timeout is complete, hides loading data
+function renderSplash() {
+  $('#splashPg').addClass('background').removeClass('noDisplay');
+  $('#loading').addClass('noDisplay').removeClass('background');
+};
 // (moveName, getStrength(xDammage), sCost, sCharge, heal, armorBoost, shakeTrue, soundId)
 //Get Input from event listener:
 //Action MENU
@@ -228,11 +232,22 @@ function playMoveSound(soundId) {
   $(soundId)[0].play();
 };
 
-//Click to start!
+//Click to start! If game is "loaded"
 $('#start').click(function() {
-  renderGame();
-  gameInit();
+  if (loaded === true){
+    renderGame();
+    gameInit();
+  }
 });
 
-//Play music on start
+
+
+//_________
+//Pre loader
+//---------
+//A time out fuction, which gives a chance for all img data to load then initialize the splash
+setTimeout(function(){
+  renderSplash();
   $("#music")[0].play();
+  loaded = true;
+}, 9000);

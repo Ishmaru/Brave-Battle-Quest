@@ -7,14 +7,26 @@
   <link rel="stylesheet" href="css/main.css">
 </head>
 <body>
-<!-- Splash page, hides when game begins -->
-<div class="background" id="splashPg">
-  <div class="splashHero">
-    <div class="start">
-    <div class="bbaTitle animated infinite pulse"> </div>
-      <div class="button animated zoomIn" id="start">Start Battle!</div>
-    </div>
+<!-- Fake Preloading screen, loads fx images before needed-->
+<div class="loadingSpace" id="loading">
+  <img src="art/load.gif" alt="Loading">
+  <div class="load">
+    <img src="art/attack.png">
+    <img src="art/fire.png">
+    <img src="art/heal.png">
+    <img src="art/defend.png">
+    <img src="art/lightning.png">
+    <img src="art/restore.png">
+    <img src="art/charge.png">
   </div>
+</div>
+<!-- Splash page, Unhides, when loaded, hides when game begins -->
+<div class="noDisplay" id="splashPg">
+  <div class="bbaTitle animated infinite pulse"> </div>
+  <div class="start">
+    <div class="button animated zoomIn" id="start">Start Battle!</div>
+  </div>
+  <div class="splashHero"></div>
 </div>
 <!-- gameboard -->
 <div class="noDisplay" id="area">
