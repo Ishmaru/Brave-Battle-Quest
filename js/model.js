@@ -1,6 +1,8 @@
 // ------------------
 // GAME MODEL DATA!!!
 // ------------------
+// Signifies weather game is "loaded"
+var loaded = false;
 
 // enables/disables player moves
 var input = true;

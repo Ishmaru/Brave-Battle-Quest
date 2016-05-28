@@ -185,7 +185,6 @@ margin-top: 450px;
   position: absolute;
   display: inline-block;
   float: center;
-/*  margin: 150px auto;*/
   width: 1000px;
   left: 0px;
   top: 200px;
@@ -221,26 +220,45 @@ span {
 .splashHero {
   display: inline:block;
   width: 650px;
-  height: 670px;
+  height: 500px;
   float: center;
   margin-left: auto;
   margin-right: auto;
-  margin-top: -20px;
+  margin-top: -350px;
   background: url("../art/hero.png");
-  background-position: 0px 150px;
+  background-position: 0px 0px;
   background-repeat: no-repeat;
   border-radius: 40%;
 }
+
 .start {
-  position: absolute;
-  left: 43%;
-  top: 70%;
+  display: inline-block;
+  margin-top: 200px;
+  margin-left: auto;
+  margin-right: auto;
+  width: 200px;
+  height: 40px;
+
 }
+
 .bbaTitle {
-  position: absolute;
-  left: -155%;
-  top: -500%;
+  margin: auto;
   width: 900px;
   height: 250px;
   background: url("../art/bba.png");
+}
+
+#loading > img {
+  display: inline-block;
+  margin-top: 25%;
+}
+
+.load {
+  display: none;
+}
+
+.loadingSpace {
+  width: 1050px;
+  height: 650px;
+  margin: auto;
 }
