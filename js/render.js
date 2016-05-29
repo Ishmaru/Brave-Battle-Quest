@@ -240,8 +240,6 @@ $('#start').click(function() {
   }
 });
 
-
-
 //_________
 //Pre loader
 //---------
@@ -250,4 +248,4 @@ setTimeout(function(){
   renderSplash();
   $("#music")[0].play();
   loaded = true;
-}, 9000);
+}, 3000);
